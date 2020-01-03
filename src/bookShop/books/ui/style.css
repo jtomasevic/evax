@@ -1,0 +1,33 @@
+.book-title { grid-area: title; 
+    font-size: 24;
+}
+.book-picture { grid-area: pictr; 
+
+}
+.book-description { grid-area: descr; 
+    font-size: 14px;
+}
+.book-actions { grid-area: footr; 
+    border-bottom: 1px solid rgb(236, 232, 232);
+
+}
+
+.book-grid-container {
+  display: grid;
+  grid-template-areas:
+    'title title title title title'
+    'pictr descr descr descr descr'
+    'pictr footr footr footr footr';
+  grid-gap: 1px;
+  /* background-color: silver; */
+  padding: 1px;
+}
+
+.book-grid-container > div {
+  background-color: white;
+  padding: 10px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
