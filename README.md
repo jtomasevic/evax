@@ -76,6 +76,43 @@ export function userLogin (email, password, dispatch) {
     });
 };
 ```
+So that's it. We didn't acctually use reducers, state from action is merged to store, and we are skipping so usuall ``` switch/case``` practice.
+
+### Using in UI
+Here is uncomplete example. We'll not handle page loading or errors, assuming that our API works fine and books will be fetched from server successfully.
+
+```javascript
+import React from 'react';
+// we import previoisly created store
+import { useBooks } from '../../store';
+// we import previoisly created action
+import { loadBooks } from '../actions';
+// this is just UI element for representing book in the list.
+import BookItem from './book';
+
+const BookList = () => {
+    // this is key line. here we send list of action i.e. useBooks(loadBooks, addToBasket, ..., )
+    // and we get back store itself and actions (functions) that are ready to be dispatched.
+    // notice that we don't have anywhere dispatch function. 
+    const [store, LoadBooks] = useBooks(loadBooks);
+    if (!store.status) {
+        // now we just call action. 
+        LoadBooks();
+    }
+    return (
+        <div>
+            <h1>Books</h1>
+            <div className='books-grid-container'>
+                {store.books.map((book) => (
+                    <BookItem key={book.id} book={book} bookAction={() => console.log('action') } actionCaption='Add to basket' />
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default BookList;
+```
 
 ## Binding actions to UI
 
