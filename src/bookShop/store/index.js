@@ -47,12 +47,14 @@ const books = () => ({ books: [], status: undefined, filter: undefined }: BooksS
 /**
  * Crerting shoopingBag store
  */
-const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: ShoppingBagStore);
+const shoopingBag = () => ({ books: [], totalPrice: 0, booksHash: {} }: ShoppingBagStore);
 
 /**
  * createStore is utility function to create store, and utility function (see returning result).
  * This utility function are latter used by UI to handle store and dispatch actions.
  */
-const [useBooks, useShoopingBag] = createStore(books, shoopingBag);
+const [useBooks, useShoopingBag, attachToAction, store] = createStore(books, shoopingBag);
 export { useBooks };
 export { useShoopingBag };
+export { attachToAction };
+export { store };

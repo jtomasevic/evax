@@ -6,7 +6,9 @@ import 'regenerator-runtime/runtime';
 // import BooksList from './books/ui/bookList';
 import history from './common/history';
 import BookList from './bookShop/books/ui';
+import { reducers } from './bookShop/reducers';
 
+reducers();
 render(
     <Router history={history}>
         <Route exact path="/" component={BookList} />
