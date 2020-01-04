@@ -331,9 +331,72 @@ export const removeFromBasket = (book: Book) => ({
 ### We don't need action creators (for now)
 Add, and remove actions are not calling web API or anything like that. They just update store locally in memory. So we can just call them from UI as we did with LoadBooks
 
-### Implement 'buy' option on book list page
+### Implement 'Add to basket' option on book list page
+Now we need something like reducers. We need to update basket list of books, but also total price, and maybe some other things, so we cannot just merge state like in previous example
 
+### Adding reducers
+Here is whole code, hoepfully understandable, (more description coming)
+```javascript
+/**
+ * This is replacer for reducers.
+ * It is not mandatory to have "reducer". If doesn't exist, action result will just merge with current store.
+ */
+export const basketReducers = () => {
+    /**
+     * User add book to shoping bag
+     * @param {ShopingBagStore} store store to keep data about shoping, use can add, remove, or pay choosen books.
+     * @returns {ShoppingBagStore} return updated data (store) for shoping bag.
+     */
+    const onAddBookToBasket = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+        const basketBooks: Array<Book> = store.books ? store.books : [];
+        const booksHash: {} = store.booksHash ? store.booksHash : {};
+        booksHash[actionResult.book.id] = actionResult.book;
+        actionResult.book.inBasket = true;
+        basketBooks.push(actionResult.book);
+        return { ...store, books: basketBooks, booksHash };
+    };
 
+    // eslint-disable-next-line no-unused-vars
+    const onAddBookToBasketAdjustPrice = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+        const basketBooks: Array<Book> = store.books ? store.books : [];
+        let total: number = 0;
+        basketBooks.forEach((book: Book) => {
+            total += book.price;
+        });
+        return { ...store, totalPrice: total };
+    };
+
+    useReducer('addBookToBasket', onAddBookToBasket);
+    useReducer('addBookToBasket', onAddBookToBasketAdjustPrice);
+
+    const onRemoveFromBasket = (store: ShoppingBagStore, actionResult: any) => {
+        actionResult.book.inBasket = false;
+        const basketBooks: Array<Book> = store.books ? store.books : [];
+        const booksHash: BooksHash = store.booksHash ? store.booksHash : {};
+        delete booksHash[actionResult.book.id];
+        for (let i = basketBooks.length - 1; i >= 0; i--) {
+            if (basketBooks[i].id === actionResult.book.id) {
+                basketBooks.splice(i, 1);
+                break;
+            }
+        }
+        return { ...store, books: basketBooks };
+    };
+
+    const onRemoveFromBasketAdjustPrice = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+        const total: number = store.totalPrice - actionResult.book.price;
+        return { ...store, totalPrice: total };
+    };
+
+    useReducer('removeFromBasket', onRemoveFromBasket);
+    useReducer('removeFromBasket', onRemoveFromBasketAdjustPrice);
+};
+
+export const reducers = () => {
+    basketReducers();
+};
+```
+You can notice that you can define several reducer function for one action. It gives you nice mechanizm to partially implement logic, and test it. Of course you must take care of order.
 ## Binding actions to UI
 
 ## Installation
