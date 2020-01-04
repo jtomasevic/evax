@@ -3,7 +3,7 @@ import { createStore } from '../../../lib';
 import { Book } from '../model';
 
 /**
- * Here we define structure of our book list store.
+ * Definition of book list store.
  */
 export interface BooksStore {
     /**
@@ -19,13 +19,40 @@ export interface BooksStore {
      */
     filter?: string
 }
+
+export type BooksHash = { [number: number]: Book };
+
+/**
+ * Definition of shopping bag store.
+ */
+export interface ShoppingBagStore {
+    /**
+     * Books that user wants to buy
+     */
+    books: Array<Book>,
+    /**
+     * Total amount for paying
+     */
+    total: number,
+    /**
+     * Helper dictionary structure for adjusting prices while search, etc.
+     */
+    booksHash: BooksHash
+}
+
 /**
  * This is how we define sore. Funcion with initial state.
  */
 const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
 /**
+ * Crerting shoopingBag store
+ */
+const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: ShoppingBagStore);
+
+/**
  * createStore is utility function to create store, and utility function (see returning result).
  * This utility function are latter used by UI to handle store and dispatch actions.
  */
-const [useBooks] = createStore(books);
+const [useBooks, useShoopingBag] = createStore(books, shoopingBag);
 export { useBooks };
+export { useShoopingBag };

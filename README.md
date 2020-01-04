@@ -10,6 +10,49 @@ In Evax we start from assumption that most or many action result just need simpl
 ## Example - book store
 Let's say we are building online book shop. For start we want to load list of books using some API and to show this books on the webpage. 
 
+### Create store
+
+For now just be aware of this code, we'll come to this in another chapter. It's using flow.js so might looks strange, but this is our recomended way for using Evax.
+
+```javascript
+// import @flow
+import { createStore } from '../../../lib';
+import { Book } from '../model';
+
+/**
+ * Definition of book list store.
+ */
+export interface BooksStore {
+    /**
+     * list of books loaded from server
+     */
+    books: Array<Book>,
+    /**
+     * Status of current book action. For example: loading, loaded, error.
+     */
+    status?: string,
+    /**
+     * When user is searching/filtering books here we store current filter
+     */
+    filter?: string
+}
+
+export type BooksHash = { [number: number]: Book };
+
+/**
+ * This is how we define sore. Funcion with initial state.
+ */
+const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
+
+/**
+ * createStore is utility function to create store, and utility function (see returning result).
+ * This utility function are latter used by UI to handle store and dispatch actions.
+ */
+const [useBooks] = createStore(books);
+export { useBooks };
+
+```
+
 ### Create actions
 
 Action in Evax are identical to Redux action. We would need following action:
@@ -201,6 +244,95 @@ const BookList = () => {
 export default BookList;
 
 ```
+## Adding another store.
+
+Obviously we'll need store to keep track on books that user wants to buy. Notice that in this moment user is still not logged in, we'll come to this latter. 
+
+So let's start in same order
+
+### Define store
+
+We already have store named books, we need new one named shoopingBag. Here how now our store file looks:
+```javascript
+// import @flow
+import { createStore } from '../../../lib';
+import { Book } from '../model';
+
+/**
+ * Definition of book list store.
+ */
+export interface BooksStore {
+    /**
+     * list of books loaded from server
+     */
+    books: Array<Book>,
+    /**
+     * Status of current book action. For example: loading, loaded, error.
+     */
+    status?: string,
+    /**
+     * When user is searching/filtering books here we store current filter
+     */
+    filter?: string
+}
+
+export type BooksHash = { [number: number]: Book };
+
+/**
+ * Definition of shopping bag store.
+ */
+export interface ShoppingBagStore {
+    /**
+     * Books that user wants to buy
+     */
+    books: Array<Book>,
+    /**
+     * Total amount for paying
+     */
+    total: number,
+    /**
+     * Helper dictionary structure for adjusting prices while search, etc.
+     */
+    booksHash: BooksHash
+}
+
+/**
+ * This is how we define sore. Funcion with initial state.
+ */
+const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
+/**
+ * Crerting shoopingBag store
+ */
+const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: ShoppingBagStore);
+
+/**
+ * createStore is utility function to create store, and utility function (see returning result).
+ * This utility function are latter used by UI to handle store and dispatch actions.
+ */
+const [useBooks, useShoopingBag] = createStore(books, shoopingBag);
+export { useBooks };
+export { useShoopingBag };
+```javascript
+
+### Create actions
+
+```javascript
+export const addToBasket = (book: Book) => ({
+    type: 'addBookToBasket',
+    book
+});
+
+export const removeFromBasket = (book: Book) => ({
+    type: 'removeFromBasket',
+    book
+});
+```
+
+### We don't need action creators (for now)
+Add, and remove actions are not calling web API or anything like that. They just update store locally in memory. So we can just call them from UI as we did with LoadBooks
+
+### Implement 'buy' option on book list page
+
 
 ## Binding actions to UI
 

@@ -23,7 +23,7 @@ module.exports = {
             use: ['react-svg-loader']
         }, {
             test: /\.png|jpg$/,
-            include: path.join(__dirname, 'images'),
+            include: path.join(__dirname, 'src/images'),
             loader: ['file-loader']
         }]
     },

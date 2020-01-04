@@ -7,6 +7,12 @@
 .book-list-search { grid-area: search; 
    padding: 10px;
 }
+.book-list-basket { grid-area: basket
+   
+}
+.book-list-basket > img {
+   height: 50px
+}
 
 .search-box {
   margin: 6px;
@@ -28,7 +34,7 @@
 .books-grid-container {
     display: grid;
     grid-template-areas: 
-    'captin search search search search search'
+    'captin search search search search basket'
     'bookls bookls bookls bookls bookls bookls'
     ;
     grid-gap: 1px;

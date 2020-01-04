@@ -1,6 +1,7 @@
 import React from 'react';
 import { useBooks } from '../../store';
 import { loadBooks, filterBooks } from '../actions';
+import { basketImg } from '../../../images';
 import BookItem from './book';
 
 const BookList = () => {
@@ -15,6 +16,9 @@ const BookList = () => {
             </div>
             <div className='book-list-search'>
                 <input className='search-box' value={store.filter} onChange={(e) => FilterBooks(e.target.value)}></input>
+            </div>
+            <div className='book-list-basket'>
+                <img src={basketImg} />
             </div>
             <div className='book-list'>
                 {store.books.map((book) => (
