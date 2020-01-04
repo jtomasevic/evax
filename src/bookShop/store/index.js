@@ -53,8 +53,9 @@ const shoopingBag = () => ({ books: [], totalPrice: 0, booksHash: {} }: Shopping
  * createStore is utility function to create store, and utility function (see returning result).
  * This utility function are latter used by UI to handle store and dispatch actions.
  */
-const [useBooks, useShoopingBag, attachToAction, store] = createStore(books, shoopingBag);
+const [useBooks, useShoopingBag, store, useReducer] = createStore(books, shoopingBag);
+
 export { useBooks };
 export { useShoopingBag };
-export { attachToAction };
 export { store };
+export { useReducer };

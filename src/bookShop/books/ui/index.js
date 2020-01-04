@@ -20,10 +20,25 @@ const BookList = () => {
                 <input className='search-box' value={store.filter} onChange={(e) => FilterBooks(e.target.value)}></input>
             </div>
             <div className='book-list-basket'>
-                <img src={basketImg} />
-                <p>
-                    {basket.totalPrice}
-                </p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td rowSpan={3}>
+                                <img src={basketImg} height={50} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            price: {basket.totalPrice}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            items: {basket.books.length}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div className='book-list'>
                 {store.books.map((book) => (book.inBasket === true

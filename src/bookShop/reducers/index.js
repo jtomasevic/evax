@@ -1,11 +1,11 @@
-import { attachToAction, ShoppingBagStore, BooksHash } from '../store';
+import { ShoppingBagStore, BooksHash, useReducer } from '../store';
 import { Book } from '../model';
 
 /**
  * This is replacer for reducers.
  * It is not mandatory to have "reducer". If doesn't exist, action result will just merge with current store.
  */
-export const applyBasketLogic = () => {
+export const basketReducers = () => {
     /**
      * User add book to shoping bag
      * @param {ShopingBagStore} store store to keep data about shoping, use can add, remove, or pay choosen books.
@@ -31,8 +31,8 @@ export const applyBasketLogic = () => {
         return { ...store, totalPrice: total };
     };
 
-    attachToAction('addBookToBasket', onAddBookToBasket);
-    attachToAction('addBookToBasket', onAddBookToBasketAdjustPrice);
+    useReducer('addBookToBasket', onAddBookToBasket);
+    useReducer('addBookToBasket', onAddBookToBasketAdjustPrice);
 
     const onRemoveFromBasket = (store: ShoppingBagStore, actionResult: any) => {
         actionResult.book.inBasket = false;
@@ -54,10 +54,10 @@ export const applyBasketLogic = () => {
         return { ...store, totalPrice: total };
     };
 
-    attachToAction('removeFromBasket', onRemoveFromBasket);
-    attachToAction('removeFromBasket', onRemoveFromBasketAdjustPrice);
+    useReducer('removeFromBasket', onRemoveFromBasket);
+    useReducer('removeFromBasket', onRemoveFromBasketAdjustPrice);
 };
 
 export const reducers = () => {
-    applyBasketLogic();
+    basketReducers();
 };
