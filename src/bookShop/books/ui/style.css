@@ -1,3 +1,44 @@
+.books-list-caption { grid-area: captin; 
+   font-size: 36px;
+   font-weight: bold;
+   padding: 10px;
+   color:  rgb(47, 153, 109);
+}
+.book-list-search { grid-area: search; 
+   padding: 10px;
+}
+
+.search-box {
+  margin: 6px;
+  border-radius: 5px;
+  padding-left: 10px;
+  width: 400px;
+  height: 28px;
+  font-size: 16px;
+  border: 1px solid rgb(47, 153, 109);
+  outline: none; 
+}
+.search-box:focus {
+   border: 1px solid rgb(158, 15, 15);
+}
+
+.book-list { grid-area: bookls;
+}
+
+.books-grid-container {
+    display: grid;
+    grid-template-areas: 
+    'captin search search search search search'
+    'bookls bookls bookls bookls bookls bookls'
+    ;
+    grid-gap: 1px;
+    padding: 1px;
+} 
+
+/***********************************************
+BOOK LIST style
+***********************************************/
+
 .book-title { grid-area: title; 
     font-size: 24;
 }
@@ -11,7 +52,6 @@
     border-bottom: 1px solid rgb(236, 232, 232);
 
 }
-
 .book-grid-container {
   display: grid;
   grid-template-areas:

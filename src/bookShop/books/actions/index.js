@@ -64,7 +64,7 @@ export const filterBooks = (phrase: string, dispatch: Function) => {
     if (rejectFilterFetch) {
         rejectFilterFetch();
     }
-    const fetchBooks: Promise<Array<Book>> = new Promise<Array<Book>>((resolve, reject) => {
+    const fetchBooks: Promise<Array<Book>> = new Promise((resolve, reject) => {
         rejectFilterFetch = reject;
         getBooks(phrase).then((books: Array<Book>) => {
             resolve(books);
