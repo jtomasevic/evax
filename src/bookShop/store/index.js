@@ -1,6 +1,6 @@
 // import @flow
 import { createStore } from '../../../lib';
-import { Book } from '../model';
+import { Book, User } from '../model';
 
 /**
  * Definition of book list store.
@@ -39,23 +39,36 @@ export interface ShoppingBagStore {
      */
     booksHash: BooksHash
 }
+/**
+ * Holding data in user session
+ * For example using this store we can find out if user is signed in or not.
+ */
+export interface SessionStore {
+    user: User;
+}
 
 /**
  * This is how we define sore. Funcion with initial state.
  */
 const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
 /**
- * Crerting shoopingBag store
+ * Creating shoopingBag store
  */
 const shoopingBag = () => ({ books: [], totalPrice: 0, booksHash: {} }: ShoppingBagStore);
+/**
+ * Creating session store.
+ */
+const session = () => ({ user: null }: SessionStore);
 
 /**
- * createStore is utility function to create store, and utility function (see returning result).
+ * createStore is utility function to create store and new utility function (see returning result).
  * This utility function are latter used by UI to handle store and dispatch actions.
+ * Also last two parameters are global store and useReducer utility function.
  */
-const [useBooks, useShoopingBag, store, useReducer] = createStore(books, shoopingBag);
+const [useBooks, useShoopingBag, useSession, store, useReducer] = createStore(books, shoopingBag, session);
 
 export { useBooks };
 export { useShoopingBag };
+export { useSession };
 export { store };
 export { useReducer };

@@ -441,8 +441,77 @@ const BookList = () => {
 export default BookList;
 ```
 
-## Binding actions to UI
+# Binding actions to UI
+This is the most exciting feature of Evax. You can declerative bind action parameters with UI. We'll start with simple example. Login use case. I'll show now just changes in code to avoid too many copy/past code.
+## Preparation
+1. In ./bookShop/mode/index.js we are adding:
+```javascript
+export interface User {
+    userName: string;
+    email: string;
+    age: number;
+}
+```
+2. In ./booksShop/store/index.js we have following changes:
+```javascript
+...
+import { Book, User } from '../model';
+...
+...
+/**
+ * Holding data in user session
+ * For example using this store we can find out if user is signed in or not.
+ */
+export interface SessionStore {
+    user: User;
+}
+...
+...
+/**
+ * Creating session store.
+ */
+const session = () => ({ user: null }: SessionStore);
+...
+...
+/**
+ * createStore is utility function to create store and new utility function (see returning result).
+ * This utility function are latter used by UI to handle store and dispatch actions.
+ * Also last two parameters are global store and useReducer utility function.
+ */
+const [useBooks, useShoopingBag, useSession, store, useReducer] = createStore(books, shoopingBag, session);
+...
+...
+export { useSession };
+```
+3. Add actions.
+```javascript
+import { User } from '../../model';
+import { signUp, signIn } from '../api';
 
+export const userSignedIn = (user: User) => ({
+    type: 'userSignedIn',
+    user
+});
+
+export const userSignedUp = (user: User) => ({
+    type: 'userSignedUp',
+    user
+});
+
+export const userSignIn = (email: string, password: string, dispatch: Function) => {
+    console.log('****** userLogin', { email, password });
+    signIn(email, password).then((user: User) => {
+        dispatch(userSignedIn(user));
+    });
+};
+
+export const userSignUp = (email: string, password: string, age: number, source: string, gender:string, dispatch: Function) => {
+    console.log('****** userSignup', { email, password, age, source, gender });
+    signUp(email, password, age, source, gender).then((user: User) => {
+        dispatch(userSignedUp(user));
+    });
+};
+```
 ## Installation
 
 This is more/less usual set of packages to start react application with babel, ES5 sintax, and support for flow.js. Also you'll notice there are some eslint rules too. No need to go deep into package.json (or other) files for now so just hit in terminal:

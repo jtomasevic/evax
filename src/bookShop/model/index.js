@@ -14,3 +14,9 @@ export interface Book {
     description: string,
     price: number
 }
+
+export interface User {
+    userName: string;
+    email: string;
+    age: number;
+}
