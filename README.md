@@ -2,7 +2,7 @@
 Evax is library inspired by Redux, especially with concept of `actions` and `action creators`. The main difference is in reducer implementation. 
 
 In Redux reducers are usually implemented as function receiving state and action, and returning new state. This is tipically done using switch/case when we merege action result with new state. 
-> This is still and experiment. There is no still npm for Evax library. Instead fro now it's in lib folder
+> This is still and experiment. There is no still npm for Evax library. Instead for now it's in lib folder
 
 ## Response on action result
 
