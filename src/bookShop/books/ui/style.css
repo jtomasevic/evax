@@ -7,11 +7,10 @@
 .book-list-search { grid-area: search; 
    padding: 10px;
 }
-.book-list-basket { grid-area: basket
-   
+.book-list-basket { grid-area: basket;
 }
-.book-list-basket > img {
-   height: 50px
+.book-list-basket > div {
+  display: inline-block; *display: inline; zoom: 1; vertical-align: top; width:50%
 }
 
 .totalPrice{
