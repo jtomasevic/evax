@@ -397,6 +397,49 @@ export const reducers = () => {
 };
 ```
 You can notice that you can define several reducer function for one action. It gives you nice mechanizm to partially implement logic, and test it. Of course you must take care of order.
+
+### UI
+On our books page we can now start using new store and actions.
+The whole new UI looks now like this:
+```javascript
+const BookList = () => {
+    const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
+    // WE ADD THIS and in element with class book-list you can see how we are using it.
+    const [basket, AddToBasket, RemoveFromBasket] = useShoopingBag(addToBasket, removeFromBasket);
+    if (!store.status) {
+        LoadBooks();
+    }
+    return (
+        <div className='books-grid-container'>
+            <div className='books-list-caption'>
+                Books
+            </div>
+            <div className='book-list-search'>
+                <input className='search-box' value={store.filter} onChange={(e) => FilterBooks(e.target.value)}></input>
+            </div>
+            <div className='book-list-basket'>
+                <div className='basket-logo'>
+                    <img src={basketImg} height={50} />
+                </div>
+                <div className='book-list-basket-price'>
+                    price: {basket.totalPrice}
+                    <br/>
+                    items: ({basket.books.length})
+                </div>
+            </div>
+            <div className='book-list'>
+                {store.books.map((book) => (book.inBasket === true
+                    ? <BookItem key={book.id} book={book} bookAction={RemoveFromBasket} actionCaption='Remove from basket' />
+                    : <BookItem key={book.id} book={book} bookAction={AddToBasket} actionCaption='Add to basket' />
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default BookList;
+```
+
 ## Binding actions to UI
 
 ## Installation
