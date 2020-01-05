@@ -10,9 +10,19 @@
 .book-list-basket { grid-area: basket;
 }
 .book-list-basket > div {
-  display: inline-block; *display: inline; zoom: 1; vertical-align: top; width:50%
+  display: inline-block; *display: inline; zoom: 1; vertical-align: top; font-size: 14px;
 }
 
+.book-list-basket > .basket-logo {
+  width:50px; 
+}
+.book-list-basket > .book-list-basket-price {
+  width:80px; 
+}
+.book-list-basket-price {
+  padding-top: 10px;
+  padding-right: 5px;
+}
 .totalPrice{
   float: right;
 }
