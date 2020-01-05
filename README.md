@@ -312,7 +312,7 @@ const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: ShoppingBagSt
 const [useBooks, useShoopingBag] = createStore(books, shoopingBag);
 export { useBooks };
 export { useShoopingBag };
-```javascript
+```
 
 ### Create actions
 
