@@ -20,22 +20,22 @@ const Login = () => {
         <>
             <h1>Login</h1>
             <div className='sigin-in-grid-container'>
-                <div className='sigin-in-user-name-label'>
-                    User name
+                <div className='user-name-label'>
+                    Email
                 </div>
-                <div className='sigin-in-user-name-text'>
-                    <input title='User name' id='user.email' />
+                <div className='user-name-text'>
+                    <input type='text' id='user.email' />
                 </div>
-                <div className='ssigin-in-user-pass-label'>
+                <div className='user-pass-label'>
                     Password
                 </div>
-                <div className='sigin-in-user-pass-text'>
-                    <input title='User name' id='user.password' />
+                <div className='user-pass-text'>
+                    <input type='text' id='user.password' />
                 </div>
-                <div className='sigin-in-user-button'>
+                <div className='sigin-in-button'>
                     <button onClick={login} >Login</button>
                 </div>
-                <div className='sigin-up-user-button'>
+                <div className='sigin-up-button'>
                     <button onClick={() => history.push('/signup')} >Register</button>
                 </div>
             </div>
