@@ -1,6 +1,8 @@
+// @flow
 import { User } from '../../model';
 // eslint-disable-next-line no-unused-vars
 export const signIn = (email: string, password: string): Promise<User> => new Promise<User>(resolve => {
+    console.log('API set user');
     const user: User = {
         email: 'jtomasevic@gmail.com',
         userName: 'Alehijan'

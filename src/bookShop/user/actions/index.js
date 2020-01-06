@@ -1,3 +1,4 @@
+// @flow
 import { User } from '../../model';
 import { signUp, signIn } from '../api';
 
@@ -12,7 +13,6 @@ export const userSignedUp = (user: User) => ({
 });
 
 export const userSignIn = (email: string, password: string, dispatch: Function) => {
-    console.log('****** userLogin', { email, password });
     signIn(email, password).then((user: User) => {
         dispatch(userSignedIn(user));
     });

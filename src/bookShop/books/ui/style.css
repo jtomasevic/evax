@@ -69,7 +69,6 @@ BOOK LIST style
 }
 .book-actions { grid-area: footr; 
     border-bottom: 1px solid rgb(236, 232, 232);
-
 }
 .book-grid-container {
   display: grid;

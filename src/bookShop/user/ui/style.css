@@ -1,0 +1,29 @@
+.sigin-in-user-name-label { grid-area: unlbel; 
+    font-size: 24;
+}
+.sigin-in-user-name-text{ grid-area: untext; 
+    font-size: 24;
+}
+.sigin-in-user-pass-label { grid-area: pslbel; 
+    font-size: 24;
+}
+.sigin-in-user-pass-text{ grid-area: pstext; 
+    font-size: 24;
+}
+.sigin-in-user-button{ grid-area: logbtn; 
+    font-size: 24;
+}
+.sigin-up-user-button{ grid-area: supbtn; 
+    font-size: 24;
+}
+.sigin-in-grid-container {
+    display: grid;
+    grid-template-areas:
+      'unlbel untext'
+      'pslbel pstext'
+      'logbtn supbtn';
+    grid-gap: 5px;
+    /* background-color: silver; */
+    padding: 1px;
+    grid-template-columns: 100px 200px;
+  }

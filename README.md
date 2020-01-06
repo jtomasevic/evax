@@ -499,18 +499,83 @@ export const userSignedUp = (user: User) => ({
 });
 
 export const userSignIn = (email: string, password: string, dispatch: Function) => {
-    console.log('****** userLogin', { email, password });
     signIn(email, password).then((user: User) => {
         dispatch(userSignedIn(user));
     });
 };
 
 export const userSignUp = (email: string, password: string, age: number, source: string, gender:string, dispatch: Function) => {
-    console.log('****** userSignup', { email, password, age, source, gender });
     signUp(email, password, age, source, gender).then((user: User) => {
         dispatch(userSignedUp(user));
     });
 };
+```
+
+Let's check now UI for login. 
+```javascript
+import React from 'react';
+import { useSession } from '../../store';
+import { userSignIn } from '../actions';
+import history from '../../../common/history';
+import { bindActionProps } from '../../../../lib';
+import './style.css';
+
+const Login = () => {
+    const [store, UserSignIn] = useSession(userSignIn);
+    if (store.user) {
+        history.push('/');
+    }
+
+    const login = bindActionProps(UserSignIn,
+        'user.email',
+        'user.password');
+
+    return (
+        <>
+            <h1>Login</h1>
+            <div className='sigin-in-grid-container'>
+                <div className='sigin-in-user-name-label'>
+                    User name
+                </div>
+                <div className='sigin-in-user-name-text'>
+                    <input id='user.email' />
+                </div>
+                <div className='ssigin-in-user-pass-label'>
+                    Password
+                </div>
+                <div className='sigin-in-user-pass-text'>
+                    <input id='user.password' />
+                </div>
+                <div className='sigin-in-user-button'>
+                    <button onClick={login} >Login</button>
+                </div>
+                <div className='sigin-up-user-button'>
+                    <button onClick={() => history.push('/signup')} >Register</button>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Login;
+```
+Pay attention one this part:
+```javascript
+    // remember that loging is now wrapper for UserSignIn function
+    const login = bindActionProps(UserSignIn,
+        'user.email', // take first parameter from element with id user.email
+        'user.password'); // take second parameter from element with id user.password 
+```
+and latter
+```javascript
+...
+    <input id='user.email' />
+...
+    <input id='user.password' />
+```
+and finally
+```javascript
+    <button onClick={() => login()} >Login</button>
 ```
 ## Installation
 
