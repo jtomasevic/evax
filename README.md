@@ -589,6 +589,6 @@ npm install
 
 Just hit 
 ```javascript
-npm install
+npm run start
 ```
 and go to:  ```http://localhost:7000/```
