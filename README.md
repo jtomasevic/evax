@@ -575,7 +575,7 @@ and latter
 ```
 and finally
 ```javascript
-    <button onClick={() => login()} >Login</button>
+    <button onClick={login} >Login</button>
 ```
 ## Installation
 
