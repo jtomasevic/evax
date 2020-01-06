@@ -583,6 +583,7 @@ Here we'll introduce much more complex example from previous.
 - We'll use select tag to choose some value, and still to be able to connect it with action parameters
 - We'll use radio-button list with same challanges. 
 So I suggest let's frist take a look to whole code and then we'll go step by step and explain.
+
 ```javascript
 import React from 'react';
 import { useSession } from '../../store/index';
