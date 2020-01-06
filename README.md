@@ -577,6 +577,16 @@ and finally
 ```javascript
     <button onClick={login} >Login</button>
 ```
+# More about binding action
+Here we'll introduce much more complex example from previous.
+- We'll need to convert value from default string to number
+- We'll use select tag to choose some value, and still to be able to connect it with action parameters
+- We'll use radio-button list with same challanges. 
+So I suggest let's frist take a look to whole code and then we'll go step by step and explain.
+```javascript
+
+```
+
 ## Installation
 
 This is more/less usual set of packages to start react application with babel, ES5 sintax, and support for flow.js. Also you'll notice there are some eslint rules too. No need to go deep into package.json (or other) files for now so just hit in terminal:

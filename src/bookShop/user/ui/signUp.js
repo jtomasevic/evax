@@ -5,6 +5,7 @@ import { userSignUp } from '../actions';
 import history from '../../../common/history';
 import { bindActionProps } from '../../../../lib/index';
 
+// this will be our hellper structure for 'how did tou find us' which is usually get from API, but let's keep things simple for now.
 const howDidYouFinUsOptions = [
     'Recomendation',
     'Googling about bookd',
@@ -12,6 +13,7 @@ const howDidYouFinUsOptions = [
     'Instagram'
 ];
 
+// more/less like howDidYouFinUsOptions, also it could be object like: {genter:'Male, id:1}, etc...
 const genders = [
     'Male',
     'Female'
@@ -22,6 +24,20 @@ const SignUp = () => {
     if (store.user) {
         history.push('/basket');
     }
+    /**
+     * Binding works in this way.
+     * 1. First parameter is Action.
+     * 2. Then by action signature order, goes id's of controls that in some way keep value for action parameter.
+     * In given example UserSignup is wrapper for action that has following signature:
+     *  userSignUp = (email: string,
+     *                password: string,
+     *                userName: string,
+     *                age: number,
+     *                source: string,
+     *                gender:string)
+     * It is very important to NOTICE that bidings are in the sam order as parameters.
+     * Look next statement just bellow this comment and compare with action declaration.
+     */
     const signUp = bindActionProps(UserSignup,
         'user.email',
         'user.password',
@@ -29,9 +45,10 @@ const SignUp = () => {
         ['user.age', (element: HTMLElement) => parseInt(element.value)],
         'user.source',
         'user.gender');
-        // ['user.source', (element: HTMLElement) => element.value]);
-
+    // generating select option.
     const options = howDidYouFinUsOptions.map((op: string) => <option key={op} value={op}>{op}</option>);
+    // we need a trick for radio-button. trick is that one element can connect id and value attribute to enable bindings.
+    // try to figure out next few lines (more explanation coming).
     const onGenderChange = (e) => (document.getElementById('user.gender').setAttribute('value', e.target.value));
     const genderOptions = genders.map((gender: string) => <span key={gender}>
         <label>{gender}</label>
