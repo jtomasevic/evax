@@ -33,10 +33,10 @@ const Login = () => {
                     <input type='text' id='user.password' />
                 </div>
                 <div className='sigin-in-button'>
-                    <button onClick={login} >Login</button>
+                    <a href='#' className='standard-button' onClick={login} >Login</a>
                 </div>
                 <div className='sigin-up-button'>
-                    <button onClick={() => history.push('/signup')} >Register</button>
+                    <a href='#' className='standard-button' onClick={() => history.push('/signup')} >Register</a>
                 </div>
             </div>
         </>

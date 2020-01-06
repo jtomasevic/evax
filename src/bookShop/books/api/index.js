@@ -17,7 +17,6 @@ export const getBooks = (filter: string): Promise<Array<Book>> => new Promise<Ar
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${filter}`)
         .then((res) => res.json())
         .then((result) => {
-            console.log(result);
             if (result.error) {
                 throw new Error(JSON.stringify(result));
             } else {
@@ -39,7 +38,6 @@ export const getBooks = (filter: string): Promise<Array<Book>> => new Promise<Ar
                     description: googleBook.volumeInfo.description,
                     price: getBookPrice()
                 }));
-                console.log('google api: ', books);
                 resolve(books);
             }
         });

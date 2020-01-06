@@ -19,7 +19,6 @@ export const userSignIn = (email: string, password: string, dispatch: Function) 
 };
 
 export const userSignUp = (email: string, password: string, userName: string, age: number, source: string, gender:string, dispatch: Function) => {
-    console.log('****** userSignup', { email, password, userName, age, source, gender });
     signUp(email, password, age, source, gender).then((user: User) => {
         dispatch(userSignedUp(user));
     });

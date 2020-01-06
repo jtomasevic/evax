@@ -640,7 +640,6 @@ const SignUp = () => {
         <input type='radio' name='gender' value={gender} onChange={onGenderChange}/>
     </span>);
 
-    console.log(options);
     return (
         <>
             <h1>Sign up now!</h1>
