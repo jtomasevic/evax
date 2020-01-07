@@ -4,7 +4,6 @@ import { useSession } from '../../store';
 import { userSignIn } from '../actions';
 import history from '../../../common/history';
 import { bindActionProps } from '../../../../lib';
-import './style.css';
 
 const Login = () => {
     const [store, UserSignIn] = useSession(userSignIn);
