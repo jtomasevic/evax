@@ -6,7 +6,7 @@ import 'regenerator-runtime/runtime';
 import history from './common/history';
 import { BookList, SignIn, SignUp } from './bookShop';
 import { reducers } from './bookShop/reducers';
-import { HelloAsync, HelloSync, HelloBindingsSync } from './helloWorld';
+import { HelloAsync, HelloSync, HelloBindingsSync, HelloBindingsAync } from './helloWorld';
 
 reducers();
 
@@ -18,6 +18,7 @@ render(
         <Route exact path="/hello" component={HelloSync} />
         <Route exact path="/hello2" component={HelloAsync} />
         <Route exact path="/hello3" component={HelloBindingsSync} />
+        <Route exact path="/hello4" component={HelloBindingsAync} />
     </Router>, document.getElementById('app')
 );
 module.hot.accept();
