@@ -7,6 +7,7 @@ import 'regenerator-runtime/runtime';
 import history from './common/history';
 import { BookList, SignIn, SignUp } from './bookShop';
 import { reducers } from './bookShop/reducers';
+import { HelloWorld } from './helloWorld';
 
 reducers();
 render(
@@ -14,6 +15,7 @@ render(
         <Route exact path="/" component={BookList} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/hello" component={HelloWorld} />
     </Router>, document.getElementById('app')
 );
 module.hot.accept();
