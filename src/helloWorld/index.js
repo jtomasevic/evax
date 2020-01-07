@@ -1,36 +1,5 @@
-import React from 'react';
-import { createStore } from '../../lib';
+import HelloAsync from './hwAsync';
+import HelloSync from './hwSync';
+import HelloBindingsSync from './hwBindingSync';
 
-// define store
-const messages = () => ({ message: undefined });
-
-// create store
-const [useMessages] = createStore(messages);
-
-// create action
-const messageReceived = (message) => ({
-    type: 'messageReceived',
-    message
-});
-
-// create action creator (async action)
-const messageRequest = (name, dispatch) => {
-    setTimeout(() => {
-        dispatch(messageReceived(`Hello world to ${name}`));
-    }, 1000);
-};
-
-// create ui element
-export const HelloWorld = () => {
-    const [store, MessageRequest] = useMessages(messageRequest);
-    if (!store.message) {
-        // call action directly, no wrapping etc.
-        MessageRequest('somebody');
-    }
-    console.log('render', store);
-    return (
-        <div>
-            {store.message}
-        </div>
-    );
-};
+export { HelloAsync, HelloSync, HelloBindingsSync };
