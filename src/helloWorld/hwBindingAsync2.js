@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React from 'react';
 import { createStore, bindActionProps } from '../../lib';
 
@@ -21,10 +22,11 @@ const lotterySubmit = (userName, lotteryTicketNo, dispatch) => {
     console.log(`calling async method and send ${userName} and ${lotteryTicketNo} to some API`);
     setTimeout(() => {
         // so let's pretend that variables won and amount are result from API code.
-        const won = !(Math.floor(Math.random() * 2) > 0);
+        const won = !(Math.floor(Math.random() * 3) > 0);
+        console.log('won', won);
         const getRndAmount = (min, max) => Math.floor(Math.random() * (max - min)) + min;
         let amount = 0;
-        if (won !== 0) {
+        if (won === true) {
             amount = getRndAmount(1000, 300000);
         }
         const message = won ? `Bravo! You just won $ ${amount}!` : 'Sorry try next time';
@@ -41,7 +43,7 @@ const HelloWorld = () => {
     // bindActionProps will create function ready to pick up values from ui and to invoke action, so it's easy to bind to UI.
     const submit = bindActionProps(LotterySubmit,
         'user.userName',
-        'user.lotteryNo');
+        ['user.lotteryNo', (element) => parseInt(element.value)]);
     return (
         <>
             <h3>Hello world example for action bindings (sync)</h3>
