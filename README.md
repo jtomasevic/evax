@@ -1,4 +1,4 @@
-# EVAX
+# Evax
 Evax is library inspired by Redux, especially with concept of `actions` and `action creators`. The main difference is in reducer implementation. 
 
 In Redux reducers are usually implemented as function receiving state and action, and returning new state. This is tipically done using switch/case when we merege action result with new state. 
@@ -10,6 +10,13 @@ In Redux reducers are usually implemented as function receiving state and action
 - [Bind reducer actions to UI](https://github.com/jtomasevic/evax/wiki/3.-Action-Binding-(sync))
 - [Bind reducer actions to UI - async](https://github.com/jtomasevic/evax/wiki/4.-Action-Bindings-(async))
 - [Bind reducer actions to UI - more](https://github.com/jtomasevic/evax/wiki/5.-Action-bindings-value-manipulation-(input-text))
+
+### To install and run this example:
+```javascript
+npm install
+npm run start
+```
+and go to:  ```http://localhost:7000/```
 
 ## Response on action result
 
