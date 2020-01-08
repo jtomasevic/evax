@@ -5,11 +5,11 @@ In Redux reducers are usually implemented as function receiving state and action
 > This is still and experiment. There is no still npm for Evax library. Instead for now it's in lib folder
 
 ### Quick Intro
-[Hello World](https://github.com/jtomasevic/evax/wiki/1.-Hello-World)
-[Hello World - async](https://github.com/jtomasevic/evax/wiki/2.-Hello-World-Async)
-[Bind reducer actions to UI](https://github.com/jtomasevic/evax/wiki/3.-Action-Binding-(sync))
-[Bind reducer actions to UI - async](https://github.com/jtomasevic/evax/wiki/4.-Action-Bindings-(async))
-[Bind reducer actions to UI - more](https://github.com/jtomasevic/evax/wiki/5.-Action-bindings-value-manipulation-(input-text))
+- [Hello World](https://github.com/jtomasevic/evax/wiki/1.-Hello-World)
+- [Hello World - async](https://github.com/jtomasevic/evax/wiki/2.-Hello-World-Async)
+- [Bind reducer actions to UI](https://github.com/jtomasevic/evax/wiki/3.-Action-Binding-(sync))
+- [Bind reducer actions to UI - async](https://github.com/jtomasevic/evax/wiki/4.-Action-Bindings-(async))
+- [Bind reducer actions to UI - more](https://github.com/jtomasevic/evax/wiki/5.-Action-bindings-value-manipulation-(input-text))
 
 ## Response on action result
 
