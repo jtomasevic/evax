@@ -19,7 +19,7 @@ class BookList extends React.Component {
                 books: []
             }
         };
-        // this.setState = this.setState.bind(this);
+        this.setState = this.setState.bind(this);
     }
 
     componentDidMount() {
@@ -39,8 +39,6 @@ class BookList extends React.Component {
     }
 
     render() {
-        console.log('RENDER', this.state.books);
-        console.log('RENDER basket', this.state.basket);
         return (
             <div className='books-grid-container'>
                 <div className='books-list-caption'>
@@ -63,8 +61,6 @@ class BookList extends React.Component {
                     {this.state.books ? this.state.books.books.map((book) => (book.inBasket === true
                         ? <BookItem key={book.id} book={book} bookAction={this.RemoveFromBasket} actionCaption='Remove from basket' />
                         : <BookItem key={book.id} book={book} bookAction={this.AddToBasket} actionCaption='Add to basket' />
-                        // ? <BookItem key={book.id} book={book} bookAction={() => console.log('remove') } actionCaption='Remove from basket' />
-                        // : <BookItem key={book.id} book={book} bookAction={() => console.log('add')} actionCaption='Add to basket' />
                     )) : <p>0</p>}
                 </div>
             </div>
