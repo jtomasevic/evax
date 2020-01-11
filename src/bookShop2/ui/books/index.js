@@ -10,21 +10,23 @@ import BookItem from '../../../bookShop/books/ui/book';
 class BookList extends React.Component {
     constructor(state, context) {
         super(state, context);
+        // Very important:
+        // you need to define proper state, with proper properties.
         this.state = {
             shoopingBag: {
-                books: []
+                books: [],
+                total: 0
             },
             books: {
                 filter: '',
                 books: []
             }
         };
-        this.setState = this.setState.bind(this);
     }
 
     componentDidMount() {
-        const [store, LoadBooks, FilterBooks] = useBooks([this, this.setState, this.state], loadBooks, filterBooks);
-        const [basket, AddToBasket, RemoveFromBasket] = useShoopingBag([this, this.setState, this.state], addToBasket, removeFromBasket);
+        const [booksStore, LoadBooks, FilterBooks] = useBooks([this], loadBooks, filterBooks);
+        const [basketStore, AddToBasket, RemoveFromBasket] = useShoopingBag([this], addToBasket, removeFromBasket);
 
         this.LoadBooks = LoadBooks;
         this.FilterBooks = FilterBooks;
@@ -33,19 +35,15 @@ class BookList extends React.Component {
         this.LoadBooks();
     }
 
-    static getDerivedStateFromProps(nextProps) {
-        console.log('next props', nextProps);
-        return nextProps;
-    }
-
     render() {
+        console.log('-- RENDER ', this);
         return (
             <div className='books-grid-container'>
                 <div className='books-list-caption'>
                 Books
                 </div>
                 <div className='book-list-search'>
-                    <input className='search-box' value={this.state.books.filter} onChange={(e) => this.FilterBooks(e.target.value)}></input>
+                    <input className='search-box' onChange={(e) => this.FilterBooks(e.target.value)}></input>
                 </div>
                 <div className='book-list-basket'>
                     <div className='basket-logo'>
@@ -58,7 +56,7 @@ class BookList extends React.Component {
                     </div>
                 </div>
                 <div className='book-list'>
-                    {this.state.books ? this.state.books.books.map((book) => (book.inBasket === true
+                    {this.state.books.books ? this.state.books.books.map((book) => (book.inBasket === true
                         ? <BookItem key={book.id} book={book} bookAction={this.RemoveFromBasket} actionCaption='Remove from basket' />
                         : <BookItem key={book.id} book={book} bookAction={this.AddToBasket} actionCaption='Add to basket' />
                     )) : <p>0</p>}
