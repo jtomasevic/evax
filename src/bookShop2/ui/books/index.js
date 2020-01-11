@@ -24,9 +24,15 @@ class BookList extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, context) {
+        console.log('-- nextProps', nextProps);
+        console.log('-- old state');
+        console.log('-- context', context);
+    }
+
     componentDidMount() {
-        const [booksStore, LoadBooks, FilterBooks] = useBooks([this], loadBooks, filterBooks);
-        const [basketStore, AddToBasket, RemoveFromBasket] = useShoopingBag([this], addToBasket, removeFromBasket);
+        const [LoadBooks, FilterBooks] = useBooks([this], loadBooks, filterBooks);
+        const [AddToBasket, RemoveFromBasket] = useShoopingBag([this], addToBasket, removeFromBasket);
 
         this.LoadBooks = LoadBooks;
         this.FilterBooks = FilterBooks;
