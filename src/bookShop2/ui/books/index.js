@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { useBooks, useShoopingBag } from '../../../bookShop/store';
-// import { useBooks } from '../../../bookShop/store';
 import { loadBooks, filterBooks } from '../../../bookShop/books/actions';
 import { addToBasket, removeFromBasket } from '../../../bookShop/basket/actions';
 import { basketImg } from '../../../images';
@@ -10,6 +9,7 @@ import BookItem from '../../../bookShop/books/ui/book';
 class BookList extends React.Component {
     constructor(state, context) {
         super(state, context);
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Very important:
         // you need to define proper state, with proper properties.
         this.state = {
@@ -24,16 +24,12 @@ class BookList extends React.Component {
         };
     }
 
-    static getDerivedStateFromProps(nextProps, context) {
-        console.log('-- nextProps', nextProps);
-        console.log('-- old state');
-        console.log('-- context', context);
-    }
-
     componentDidMount() {
+        // this are key changes.................. sending this in array (don't forget!) as first parameter
         const [LoadBooks, FilterBooks] = useBooks([this], loadBooks, filterBooks);
         const [AddToBasket, RemoveFromBasket] = useShoopingBag([this], addToBasket, removeFromBasket);
 
+        // now bind actions.
         this.LoadBooks = LoadBooks;
         this.FilterBooks = FilterBooks;
         this.AddToBasket = AddToBasket;
@@ -42,7 +38,6 @@ class BookList extends React.Component {
     }
 
     render() {
-        console.log('-- RENDER ', this);
         return (
             <div className='books-grid-container'>
                 <div className='books-list-caption'>
