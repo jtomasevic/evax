@@ -50,6 +50,16 @@ and latter:
 <input type='text' id='user.password' />
 <a href='#' onClick={login} >Login</a>
 ```
+to put all together, when link 'Login' is pressed this action will be called:
+```javascript
+function (email, password, dispatch) {
+    someApiCall.then((user) => {
+        dispatch(userSignedIn(user));
+    });
+};
+```
+but with binding, we can simplify this to zero-argument method, ```and do not care about dispatch function``` in UI layer.
+
 
 ## Quick Intro
 ----
