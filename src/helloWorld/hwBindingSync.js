@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStore, bindActionProps } from '../../lib';
+import { createStore, bindActionProps } from 'micro-reducers';
 
 // define store
 const lottery = () => ({ userName: undefined, lotteryTicketNo: 0, messageForUser: '' });

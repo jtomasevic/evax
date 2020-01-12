@@ -38,7 +38,7 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ],
-    devtool: 'inline-source-map',
+    // devtool: 'inline-source-map',
     devServer: {
         port: 7000,
         contentBase: './dist',

@@ -1,5 +1,5 @@
 // import @flow
-import { createStore } from '../../../lib';
+import { createStore } from 'micro-reducers';
 import { Book, User } from '../model';
 
 /**

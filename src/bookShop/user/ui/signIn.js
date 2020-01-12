@@ -1,9 +1,9 @@
 /* eslint-disable radix */
 import React from 'react';
+import { bindActionProps } from 'micro-reducers';
 import { useSession } from '../../store';
 import { userSignIn } from '../actions';
 import history from '../../../common/history';
-import { bindActionProps } from '../../../../lib';
 
 const Login = () => {
     const [store, UserSignIn] = useSession(userSignIn);

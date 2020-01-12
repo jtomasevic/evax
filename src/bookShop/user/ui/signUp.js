@@ -1,9 +1,10 @@
 /* eslint-disable radix */
 import React from 'react';
-import { useSession } from '../../store/index';
+import { bindActionProps } from 'micro-reducers';
+import { useSession } from '../../store';
 import { userSignUp } from '../actions';
 import history from '../../../common/history';
-import { bindActionProps } from '../../../../lib/index';
+
 
 // this will be our hellper structure for 'how did tou find us' which is usually get from API, but let's keep things simple for now.
 const howDidYouFinUsOptions = [

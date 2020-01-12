@@ -1,9 +1,10 @@
 /* eslint-disable radix */
 import React from 'react';
+import { bindActionProps } from 'micro-reducers';
 import { useSession } from '../../../bookShop/store';
 import { userSignIn } from '../../../bookShop/user/actions';
 import history from '../../../common/history';
-import { bindActionProps } from '../../../../lib';
+
 
 class Login extends React.Component {
     constructor(state, context) {

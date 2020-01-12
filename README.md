@@ -31,7 +31,7 @@ For now just be aware of this code, we'll come to this in another chapter. It's 
 
 ```javascript
 // import @flow
-import { createStore } from '../../../lib';
+import { createStore } from 'micro-reducers';
 import { Book } from '../model';
 
 /**
@@ -270,7 +270,7 @@ So let's start in same order
 We already have store named books, we need new one named shoopingBag. Here how now our store file looks:
 ```javascript
 // import @flow
-import { createStore } from '../../../lib';
+import { createStore } from 'micro-reducers';
 import { Book } from '../model';
 
 /**
@@ -531,7 +531,7 @@ import React from 'react';
 import { useSession } from '../../store';
 import { userSignIn } from '../actions';
 import history from '../../../common/history';
-import { bindActionProps } from '../../../../lib';
+import { bindActionProps } from 'micro-reducers';
 import './style.css';
 
 const Login = () => {
@@ -603,7 +603,7 @@ import React from 'react';
 import { useSession } from '../../store/index';
 import { userSignUp } from '../actions';
 import history from '../../../common/history';
-import { bindActionProps } from '../../../../lib/index';
+import { bindActionProps } from 'micro-reducers;
 
 // this will be our hellper structure for 'how did tou find us' which is usually get from API, but let's keep things simple for now.
 const howDidYouFinUsOptions = [

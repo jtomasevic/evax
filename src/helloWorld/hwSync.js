@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStore } from '../../lib';
+import { createStore } from 'micro-reducers';
 
 // define store
 const messages = () => ({ message: undefined });
