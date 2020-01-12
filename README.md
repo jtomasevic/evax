@@ -1,10 +1,30 @@
-# Evax
-Evax is library inspired by Redux, especially with concept of `actions` and `action creators`. The main difference is in reducer implementation. 
+# Micro reducers
+Micro reducers is library inspired by Redux (inherit from Flux), especially with concepts of `actions` and `action creators`. 
 
-In Redux reducers are usually implemented as function receiving state and action, and returning new state. This is tipically done using switch/case when we merege action result with new state. 
-> This is still and experiment. There is no still npm for Evax library. Instead for now it's in lib folder
+## Why Micro ?
+-----
+Comparison. How Redux works.
+> 1. In Redux reducers receive current state and result of action (json). 
+> 
+> 2. Reducer create new state 'merging' current state with action result 
+> 3. This is typically done using switch/case when we merge action result with new state. 
+> 4. Redux framework check all reducers to find first appropriate action result, (which may cause performance issues).
 
-### Quick Intro
+#### Reducing reducers
+-----
+In micro reducers we eliminate flow above whenever (3) is only 'merging states'
+#### Why ?
+In many cases, especially when actions are carefully designed considering store structure, reducer just do simple merging, nothing else. 
+So what we do:
+> 1. Assume that in most of the cases (or whenever it's possible) new state is just simple result of merging current state with new one. 
+> 
+> 2. **WRITE reducer only** when necessary.
+> 3. **CALL reducer directly**. We are using here event listener pattern, so no wasting time to look for correct reducer.
+
+**We could say this framework is apporpiate for 'action driven models'.**
+
+## Quick Intro
+----
 - [Hello World](https://github.com/jtomasevic/evax/wiki/1.-Hello-World)
 - [Hello World - async](https://github.com/jtomasevic/evax/wiki/2.-Hello-World-Async)
 - [Bind reducer actions to UI](https://github.com/jtomasevic/evax/wiki/3.-Action-Binding-(sync))
