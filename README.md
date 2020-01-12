@@ -1,9 +1,12 @@
 # Micro reducers
-Micro reducers is library inspired by Redux (inherit from Flux), especially with concepts of `actions` and `action creators`. 
+
+Micro reducers is library inspired by Redux, inherit from Flux, philosophy, especially with concepts of `actions` and `action creators`. 
 
 ## Why Micro ?
------
+---
+
 Comparison. How Redux works.
+
 > 1. In Redux reducers receive current state and result of action (json). 
 > 
 > 2. Reducer create new state 'merging' current state with action result 
@@ -11,17 +14,42 @@ Comparison. How Redux works.
 > 4. Redux framework check all reducers to find first appropriate action result, (which may cause performance issues).
 
 #### Reducing reducers
------
+---
+
 In micro reducers we eliminate flow above whenever (3) is only 'merging states'
+
 #### Why ?
+---
+
 In many cases, especially when actions are carefully designed considering store structure, reducer just do simple merging, nothing else. 
 So what we do:
+
 > 1. Assume that in most of the cases (or whenever it's possible) new state is just simple result of merging current state with new one. 
 > 
 > 2. **WRITE reducer only** when necessary.
-> 3. **CALL reducer directly**. We are using here event listener pattern, so no wasting time to look for correct reducer.
+> 3. **CALL reducer directly**. We are using here event listener pattern, so no wasting time to look for correct reducer. ```It's direct method call```
 
-**We could say this framework is apporpiate for 'action driven models'.**
+**NOTE: We could say this framework is appropriate for 'action driven models'.**
+
+## What Else ?
+---
+
+### Action Bindings (new)!
+---
+
+Yeap, we can bind action/action creator arguments to UI, and get back method to call, so we really simplify our UI. 
+Little example (from react function component type):
+```javascript
+    const login = bindActionProps(UserSignIn,
+        'user.email',
+        'user.password');
+```
+and latter: 
+```html
+<input type='text' id='user.email' />
+<input type='text' id='user.password' />
+<a href='#' onClick={login} >Login</a>
+```
 
 ## Quick Intro
 ----
