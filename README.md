@@ -37,7 +37,16 @@ So what we do:
 ### Action Bindings (new)!
 ---
 
-Yeap, we can bind action/action creator arguments to UI, and get back method to call, so we really simplify our UI. 
+- Yeap, we can bind action/action creator arguments to UI. 
+
+> We call bind method during component initialization and as **result** we receive method without arguments.
+
+Then we can simply use this method on UI without complication with passing arguments, or calling popular dispatch method.
+
+This could be **new approach in defining UI**. It's not perfect, but, it's very **'declarative'**, therefore easier to understand, write and maintain.
+
+
+simplify our UI. 
 Little example (from react function component type):
 ```javascript
     const login = bindActionProps(UserSignIn,
