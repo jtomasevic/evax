@@ -3,7 +3,6 @@
 Micro reducers is library inspired by Redux, inherit from Flux, philosophy, especially with concepts of `actions` and `action creators`. 
 
 ## Why Micro ?
----
 
 Comparison. How Redux works.
 
