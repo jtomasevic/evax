@@ -13,12 +13,10 @@ Comparison. How Redux works.
 > 4. Redux framework check all reducers to find first appropriate action result, (which may cause performance issues).
 
 #### Reducing reducers
----
 
 In micro reducers we eliminate flow above whenever (3) is only 'merging states'
 
 #### Why ?
----
 
 In many cases, especially when actions are carefully designed considering store structure, reducer just do simple merging, nothing else. 
 So what we do:
@@ -31,10 +29,8 @@ So what we do:
 **NOTE: We could say this framework is appropriate for 'action driven models'.**
 
 ## What Else ?
----
 
 ### Action Bindings (new)!
----
 
 - Yeap, we can bind action/action creator arguments to UI. 
 
@@ -68,7 +64,7 @@ but with binding, we can simplify this to zero-argument method, ```and do not ca
 
 
 ## Quick Intro
-----
+
 - [Hello World](https://github.com/jtomasevic/evax/wiki/1.-Hello-World)
 - [Hello World - async](https://github.com/jtomasevic/evax/wiki/2.-Hello-World-Async)
 - [Bind reducer actions to UI](https://github.com/jtomasevic/evax/wiki/3.-Action-Binding-(sync))
@@ -82,14 +78,13 @@ npm run start
 ```
 and go to:  ```http://localhost:7000/```
 
-## Response on action result
 
-In Evax we start from assumption that most or many action result just need simple merging with state, and some of them need additonal logic. 
 
-## Example - book store
+# Example - book store
+
 Let's say we are building online book shop. For start we want to load list of books using some API and to show this books on the webpage. 
 
-### Create store
+## Create store
 
 For now just be aware of this code, we'll come to this in another chapter. It's using flow.js so might looks strange, but this is our recomended way for using Evax.
 
@@ -170,6 +165,7 @@ export function booksLoadingError(error) {
 }
 ```
 ### Create action creator
+
 Next important thing we need is populary called action creator. In Redux it would be something like Thunk action. Especiall action executing asychronly and dispatching 'real' actions. Usually this kind of actions are called from UI. So our action creator in this case will look like this:
 
 ```javascript
