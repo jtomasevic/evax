@@ -62,6 +62,36 @@ function (email, password, dispatch) {
 ```
 but with binding, we can simplify this to zero-argument method, ```and do not care about dispatch function``` in UI layer.
 
+## Finally Reducers.
+
+When we need reducer we write function for specific action.
+
+Also we can split code in several functions (reducers), and include/exclude features as we test/want/etc...
+
+I need to write more about this but here is one example to ilustrate. We have online book store, and we can add and remove from our shoping bag. As we have array of books and total price in state, we need reducers. Apologies for not very well explained example, but I'll work more on this in following days.
+
+```javascript
+    const onRemoveFromBasket = (store, actionResult) => {
+        actionResult.book.inBasket = false;
+        const basketBooks: Array<Book> = store.books ? store.books : [];
+        for (let i = basketBooks.length - 1; i >= 0; i--) {
+            if (basketBooks[i].id === actionResult.book.id) {
+                basketBooks.splice(i, 1);
+                break;
+            }
+        }
+        return { ...store, books: basketBooks };
+    };
+
+    const onRemoveFromBasketAdjustPrice = (store, actionResult) => {
+        const total: number = store.totalPrice - actionResult.book.price;
+        return { ...store, totalPrice: total };
+    };
+
+    // use two reducer function for this action
+    useReducer('removeFromBasket', onRemoveFromBasket);
+    useReducer('removeFromBasket', onRemoveFromBasketAdjustPrice);
+```
 
 ## Quick Intro
 
