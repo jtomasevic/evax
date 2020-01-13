@@ -45,8 +45,6 @@ Then we can simply use this method on UI without complication with passing argum
 
 This could be **new approach in defining UI**. It's not perfect, but, it's very **'declarative'**, therefore easier to understand, write and maintain.
 
-
-simplify our UI. 
 Little example (from react function component type):
 ```javascript
     const login = bindActionProps(UserSignIn,
