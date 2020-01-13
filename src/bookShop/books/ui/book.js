@@ -14,7 +14,7 @@ const BookItem = ({ book, bookAction, actionCaption }: bookProps) => (
             {book.images ? <img src={book.images.small} /> : ''}
         </div>
         <div className="book-description">{book.description}</div>
-        <div className="book-actions">Price: {book.price} <a href='#' className='standard-button' onClick={() => { bookAction(book); }}>{actionCaption}</a></div>
+        <div className="book-actions">Price: {book.price} <a href='#' className='standard-button' onClick={(e) => { e.preventDefault(); bookAction(book); }}>{actionCaption}</a></div>
     </div>
 );
 
