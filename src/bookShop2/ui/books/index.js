@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { useBooks, useShoopingBag } from '../../../bookShop/store';
+import { useBooks, useBasket } from '../../../bookShop/store';
 import { loadBooks, filterBooks } from '../../../bookShop/books/actions';
 import { addToBasket, removeFromBasket } from '../../../bookShop/basket/actions';
 import { basketImg } from '../../../images';
@@ -27,7 +27,7 @@ class BookList extends React.Component {
     componentDidMount() {
         // this are key changes.................. sending this in array (don't forget!) as first parameter
         const [LoadBooks, FilterBooks] = useBooks([this], loadBooks, filterBooks);
-        const [AddToBasket, RemoveFromBasket] = useShoopingBag([this], addToBasket, removeFromBasket);
+        const [AddToBasket, RemoveFromBasket] = useBasket([this], addToBasket, removeFromBasket);
 
         // now bind actions.
         this.LoadBooks = LoadBooks;

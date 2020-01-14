@@ -1,4 +1,4 @@
-import { ShoppingBagStore, BooksHash, useReducer } from '../store';
+import { BasketStore, BooksHash, useReducer } from '../store';
 import { Book } from '../model';
 
 /**
@@ -10,9 +10,9 @@ export const basketReducers = () => {
      * User add book to shoping bag
      * @param {ShopingBagStore} store store to keep data about shoping, use can add, remove, or pay choosen books.
      * @param {AddToBasketResult} actionResult action result happened after user chooses book to buy (add to basket).
-     * @returns {ShoppingBagStore} return updated data (store) for shoping bag.
+     * @returns {BasketStore} return updated data (store) for shoping bag.
      */
-    const onAddBookToBasket = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+    const onAddBookToBasket = (store: BasketStore, actionResult: any): BasketStore => {
         const basketBooks: Array<Book> = store.books ? store.books : [];
         const booksHash: {} = store.booksHash ? store.booksHash : {};
         booksHash[actionResult.book.id] = actionResult.book;
@@ -22,7 +22,7 @@ export const basketReducers = () => {
     };
 
     // eslint-disable-next-line no-unused-vars
-    const onAddBookToBasketAdjustPrice = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+    const onAddBookToBasketAdjustPrice = (store: BasketStore, actionResult: any): BasketStore => {
         const basketBooks: Array<Book> = store.books ? store.books : [];
         let total: number = 0;
         basketBooks.forEach((book: Book) => {
@@ -34,7 +34,7 @@ export const basketReducers = () => {
     useReducer('addBookToBasket', onAddBookToBasket);
     useReducer('addBookToBasket', onAddBookToBasketAdjustPrice);
 
-    const onRemoveFromBasket = (store: ShoppingBagStore, actionResult: any) => {
+    const onRemoveFromBasket = (store: BasketStore, actionResult: any) => {
         actionResult.book.inBasket = false;
         const basketBooks: Array<Book> = store.books ? store.books : [];
         const booksHash: BooksHash = store.booksHash ? store.booksHash : {};
@@ -49,7 +49,7 @@ export const basketReducers = () => {
     };
 
     // eslint-disable-next-line no-unused-vars
-    const onRemoveFromBasketAdjustPrice = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+    const onRemoveFromBasketAdjustPrice = (store: BasketStore, actionResult: any): BasketStore => {
         const total: number = store.totalPrice - actionResult.book.price;
         return { ...store, totalPrice: total };
     };

@@ -20,3 +20,8 @@ export interface User {
     email: string;
     age: number;
 }
+
+export interface Basket {
+    books: [];
+    totalPrice: number;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBooks, useShoopingBag } from '../../store';
+import { useBooks, useBasket } from '../../store';
 import { loadBooks, filterBooks } from '../actions';
 import { addToBasket, removeFromBasket } from '../../basket/actions';
 import { basketImg } from '../../../images';
@@ -7,7 +7,7 @@ import BookItem from './book';
 
 const BookList = () => {
     const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
-    const [basket, AddToBasket, RemoveFromBasket] = useShoopingBag(addToBasket, removeFromBasket);
+    const [basket, AddToBasket, RemoveFromBasket] = useBasket(addToBasket, removeFromBasket);
     if (!store.status) {
         LoadBooks();
     }

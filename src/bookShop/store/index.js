@@ -1,4 +1,5 @@
 // import @flow
+// eslint-disable-next-line import/no-unresolved
 import { createStore } from 'micro-reducers';
 import { Book, User } from '../model';
 
@@ -25,7 +26,7 @@ export type BooksHash = { [number: number]: Book };
 /**
  * Definition of shopping bag store.
  */
-export interface ShoppingBagStore {
+export interface BasketStore {
     /**
      * Books that user wants to buy
      */
@@ -54,7 +55,7 @@ const books = () => ({ books: [], status: undefined, filter: undefined }: BooksS
 /**
  * Creating shoopingBag store
  */
-const shoopingBag = () => ({ books: [], totalPrice: 0, booksHash: {} }: ShoppingBagStore);
+const basket = () => ({ books: [], totalPrice: 0, booksHash: {} }: BasketStore);
 /**
  * Creating session store.
  */
@@ -65,10 +66,10 @@ const session = () => ({ user: null }: SessionStore);
  * This utility function are latter used by UI to handle store and dispatch actions.
  * Also last two parameters are global store and useReducer utility function.
  */
-const [useBooks, useShoopingBag, useSession, store, useReducer] = createStore(books, shoopingBag, session);
+const [useBooks, useBasket, useSession, store, useReducer] = createStore(books, basket, session);
 
 export { useBooks };
-export { useShoopingBag };
+export { useBasket };
 export { useSession };
 export { store };
 export { useReducer };

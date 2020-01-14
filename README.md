@@ -386,7 +386,7 @@ export type BooksHash = { [number: number]: Book };
 /**
  * Definition of shopping bag store.
  */
-export interface ShoppingBagStore {
+export interface BasketStore {
     /**
      * Books that user wants to buy
      */
@@ -408,15 +408,15 @@ const books = () => ({ books: [], status: undefined, filter: undefined }: BooksS
 /**
  * Crerting shoopingBag store
  */
-const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: ShoppingBagStore);
+const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: BasketStore);
 
 /**
  * createStore is utility function to create store, and utility function (see returning result).
  * This utility function are latter used by UI to handle store and dispatch actions.
  */
-const [useBooks, useShoopingBag] = createStore(books, shoopingBag);
+const [useBooks, useBasket] = createStore(books, shoopingBag);
 export { useBooks };
-export { useShoopingBag };
+export { useBasket };
 ```
 
 ### Create actions
@@ -450,9 +450,9 @@ export const basketReducers = () => {
     /**
      * User add book to shoping bag
      * @param {ShopingBagStore} store store to keep data about shoping, use can add, remove, or pay choosen books.
-     * @returns {ShoppingBagStore} return updated data (store) for shoping bag.
+     * @returns {BasketStore} return updated data (store) for shoping bag.
      */
-    const onAddBookToBasket = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+    const onAddBookToBasket = (store: BasketStore, actionResult: any): BasketStore => {
         const basketBooks: Array<Book> = store.books ? store.books : [];
         const booksHash: {} = store.booksHash ? store.booksHash : {};
         booksHash[actionResult.book.id] = actionResult.book;
@@ -462,7 +462,7 @@ export const basketReducers = () => {
     };
 
     // eslint-disable-next-line no-unused-vars
-    const onAddBookToBasketAdjustPrice = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+    const onAddBookToBasketAdjustPrice = (store: BasketStore, actionResult: any): BasketStore => {
         const basketBooks: Array<Book> = store.books ? store.books : [];
         let total: number = 0;
         basketBooks.forEach((book: Book) => {
@@ -474,7 +474,7 @@ export const basketReducers = () => {
     useReducer('addBookToBasket', onAddBookToBasket);
     useReducer('addBookToBasket', onAddBookToBasketAdjustPrice);
 
-    const onRemoveFromBasket = (store: ShoppingBagStore, actionResult: any) => {
+    const onRemoveFromBasket = (store: BasketStore, actionResult: any) => {
         actionResult.book.inBasket = false;
         const basketBooks: Array<Book> = store.books ? store.books : [];
         const booksHash: BooksHash = store.booksHash ? store.booksHash : {};
@@ -488,7 +488,7 @@ export const basketReducers = () => {
         return { ...store, books: basketBooks };
     };
 
-    const onRemoveFromBasketAdjustPrice = (store: ShoppingBagStore, actionResult: any): ShoppingBagStore => {
+    const onRemoveFromBasketAdjustPrice = (store: BasketStore, actionResult: any): BasketStore => {
         const total: number = store.totalPrice - actionResult.book.price;
         return { ...store, totalPrice: total };
     };
@@ -510,7 +510,7 @@ The whole new UI looks now like this:
 const BookList = () => {
     const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
     // WE ADD THIS and in element with class book-list you can see how we are using it.
-    const [basket, AddToBasket, RemoveFromBasket] = useShoopingBag(addToBasket, removeFromBasket);
+    const [basket, AddToBasket, RemoveFromBasket] = useBasket(addToBasket, removeFromBasket);
     if (!store.status) {
         LoadBooks();
     }
@@ -582,7 +582,7 @@ const session = () => ({ user: null }: SessionStore);
  * This utility function are latter used by UI to handle store and dispatch actions.
  * Also last two parameters are global store and useReducer utility function.
  */
-const [useBooks, useShoopingBag, useSession, store, useReducer] = createStore(books, shoopingBag, session);
+const [useBooks, useBasket, useSession, store, useReducer] = createStore(books, shoopingBag, session);
 ...
 ...
 export { useSession };
