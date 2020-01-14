@@ -4,6 +4,7 @@ import { loadBooks, filterBooks } from '../actions';
 import { addToBasket, removeFromBasket } from '../../basket/actions';
 import { basketImg } from '../../../images';
 import BookItem from './book';
+import history from '../../../common/history';
 
 const BookList = () => {
     const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
@@ -21,7 +22,7 @@ const BookList = () => {
             </div>
             <div className='book-list-basket'>
                 <div className='basket-logo'>
-                    <img src={basketImg} height={50} />
+                    <a href="#" style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); history.push('/basket'); }}> <img src={basketImg} height={50} /></a>
                 </div>
                 <div className='book-list-basket-price'>
                     price: {basket.totalPrice}
