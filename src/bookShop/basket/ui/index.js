@@ -11,7 +11,7 @@ const Basket = () => {
     return (
         <div className='books-grid-container'>
             <div className='books-list-caption'>
-                 Basket 
+                 Basket
             </div>
             <div className='book-list-search'>
                 <a href="#" style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); history.push('/'); }}>back to books</a>

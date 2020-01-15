@@ -9,11 +9,10 @@ import BookItem from '../../../bookShop/books/ui/book';
 class BookList extends React.Component {
     constructor(state, context) {
         super(state, context);
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Very important:
         // you need to define proper state, with proper properties.
         this.state = {
-            shoopingBag: {
+            basket: {
                 books: [],
                 total: 0
             },

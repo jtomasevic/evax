@@ -8,6 +8,7 @@ import { BookList, SignIn, SignUp, Basket } from './bookShop';
 import { BookListClassStyle, SignInClassStyle } from './bookShop2';
 import { reducers } from './bookShop/reducers';
 import { HelloAsync, HelloSync, HelloBindingsSync, HelloBindingsAync } from './helloWorld';
+import { todoList } from './todo';
 
 reducers();
 
@@ -19,6 +20,8 @@ render(
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signin2" component={SignInClassStyle} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/todo" component={todoList} />
+
         <Route exact path="/hello" component={HelloSync} />
         <Route exact path="/hello2" component={HelloAsync} />
         <Route exact path="/hello3" component={HelloBindingsSync} />
