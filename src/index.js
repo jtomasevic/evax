@@ -3,15 +3,17 @@ import { render } from 'react-dom';
 import { Router, Route } from 'react-router-dom';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { testfn } from 'micro-reducers';
 import history from './common/history';
 import { BookList, SignIn, SignUp, Basket } from './bookShop';
 import { BookListClassStyle, SignInClassStyle } from './bookShop2';
 import { reducers } from './bookShop/reducers';
 import { HelloAsync, HelloSync, HelloBindingsSync, HelloBindingsAync } from './helloWorld';
 import { todoList } from './todo';
+import { todoList2 } from './todoAutoArrayMode';
 
 reducers();
-
+console.log(testfn());
 render(
     <Router history={history}>
         <Route exact path="/" component={BookList} />
@@ -21,7 +23,7 @@ render(
         <Route exact path="/signin2" component={SignInClassStyle} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/todo" component={todoList} />
-
+        <Route exact path="/todo2" component={todoList2} />
         <Route exact path="/hello" component={HelloSync} />
         <Route exact path="/hello2" component={HelloAsync} />
         <Route exact path="/hello3" component={HelloBindingsSync} />
