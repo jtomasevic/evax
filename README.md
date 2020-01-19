@@ -1,3 +1,24 @@
+# For this examples:
+> npm install
+> npm run start
+> go to http://localhost:7000/
+
+## About:
+Please aplogies, still not have enough time to give all explanation but you can analyze page ```src\index.js``` see paths, and play with examples. Some of them are on codesandbox/
+
+#### Last update:
+> Maintain operation under store's array memeber:
+> - add 
+> - remove and
+> - update array member
+
+*without reducers* 
+[Last todo example](https://codesandbox.io/s/nifty-nash-ul2jp)
+
+#### Very quick intro: 
+- [Very simple Todo app](https://codesandbox.io/s/compassionate-butterfly-3mc7w?fontsize=14&hidenavigation=1&theme=dark)
+- [Very simple Todo app without reducers (!!!)](https://codesandbox.io/s/zen-resonance-tjqjx)
+- [Last todo example with statuses](https://codesandbox.io/s/nifty-nash-ul2jp)
 # Micro reducers
 
 Micro reducers is library inspired by Redux, inherit from Flux, philosophy, especially with concepts of `actions` and `action creators`. 
@@ -21,7 +42,7 @@ In micro reducers we eliminate flow above whenever (3) is only 'merging states'
 In many cases, especially when actions are carefully designed considering store structure, reducer just do simple merging, nothing else. 
 So what we do:
 
-> 1. Assume that in most of the cases (or whenever it's possible) new state is just simple result of merging current state with new one. 
+> 1. Assume that in most of the cases (or whenever it's possible) new state is just simple result of merging current state with new one.
 > 
 > 2. **WRITE reducer only** when necessary.
 > 3. **CALL reducer directly**. We are using here event listener pattern, so no wasting time to look for correct reducer. ```It's direct method call```
@@ -55,645 +76,175 @@ and latter:
 to put all together, when link 'Login' is pressed this action will be called:
 ```javascript
 function (email, password, dispatch) {
-    someApiCall.then((user) => {
+    someApiCall(email, password).then((user) => {
         dispatch(userSignedIn(user));
     });
 };
 ```
 but with binding, we can simplify this to zero-argument method, ```and do not care about dispatch function``` in UI layer.
 
-## Finally Reducers.
+## Why else MICRO ?
 
-When we need reducer we write function for specific action.
+Because you can use createStore function for different part of application. 
 
-Also we can split code in several functions (reducers), and include/exclude features as we test/want/etc...
-
-I need to write more about this but here is one example to ilustrate. We have online book store, and we can add and remove from our shoping bag. As we have array of books and total price in state, we need reducers. Apologies for not very well explained example, but I'll work more on this in following days.
-
-```javascript
-    const onRemoveFromBasket = (store, actionResult) => {
-        actionResult.book.inBasket = false;
-        const basketBooks: Array<Book> = store.books ? store.books : [];
-        for (let i = basketBooks.length - 1; i >= 0; i--) {
-            if (basketBooks[i].id === actionResult.book.id) {
-                basketBooks.splice(i, 1);
-                break;
-            }
-        }
-        return { ...store, books: basketBooks };
-    };
-
-    const onRemoveFromBasketAdjustPrice = (store, actionResult) => {
-        const total: number = store.totalPrice - actionResult.book.price;
-        return { ...store, totalPrice: total };
-    };
-
-    // use two reducer function for this action
-    useReducer('removeFromBasket', onRemoveFromBasket);
-    useReducer('removeFromBasket', onRemoveFromBasketAdjustPrice);
-```
+ * It means for different part of application createStore could be used multiple times in absolute isolation. 
+ * Isolation level is also aplied to actions, and action creators. 
 
 ## Quick Intro
 
-- [Hello World](https://github.com/jtomasevic/evax/wiki/1.-Hello-World)
-- [Hello World - async](https://github.com/jtomasevic/evax/wiki/2.-Hello-World-Async)
-- [Bind reducer actions to UI](https://github.com/jtomasevic/evax/wiki/3.-Action-Binding-(sync))
-- [Bind reducer actions to UI - async](https://github.com/jtomasevic/evax/wiki/4.-Action-Bindings-(async))
-- [Bind reducer actions to UI - more](https://github.com/jtomasevic/evax/wiki/5.-Action-bindings-value-manipulation-(input-text))
+### Examples on code sandbox
 
-### To install and run this example:
-```javascript
-npm install
-npm run start
-```
-and go to:  ```http://localhost:7000/```
+- [Very simple Todo app](https://codesandbox.io/s/compassionate-butterfly-3mc7w?fontsize=14&hidenavigation=1&theme=dark)
 
+### Hello World
 
-
-# Example - book store
-
-Let's say we are building online book shop. For start we want to load list of books using some API and to show this books on the webpage. 
-
-## Create store
-
-For now just be aware of this code, we'll come to this in another chapter. It's using flow.js so might looks strange, but this is our recomended way for using Evax.
-
-```javascript
-// import @flow
-import { createStore } from 'micro-reducers';
-import { Book } from '../model';
-
-/**
- * Definition of book list store.
- */
-export interface BooksStore {
-    /**
-     * list of books loaded from server
-     */
-    books: Array<Book>,
-    /**
-     * Status of current book action. For example: loading, loaded, error.
-     */
-    status?: string,
-    /**
-     * When user is searching/filtering books here we store current filter
-     */
-    filter?: string
-}
-
-export type BooksHash = { [number: number]: Book };
-
-/**
- * This is how we define sore. Funcion with initial state.
- */
-const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
-
-/**
- * createStore is utility function to create store, and utility function (see returning result).
- * This utility function are latter used by UI to handle store and dispatch actions.
- */
-const [useBooks] = createStore(books);
-export { useBooks };
-
-```
-
-### Create actions
-
-Action in Evax are identical to Redux action. We would need following action:
-```javascript
-/**
- * Action dispatched while books are loading using api
- */
-export function booksLoading() {
-    return {
-        type: 'booksLoading',
-        status: 'booksLoading'
-    };
-}
-/**
- * Action dipatched when books are loaded sucessfully.
- * @param {Array<Book>} books Books loaded from API
- */
-export function booksLoaded(books) {
-    return {
-        type: 'booksLoaded',
-        status: 'booksLoaded',
-        books: books
-    };
-}
-/**
- * Action dispatched when during api call someting went wrong.
- * For example server is not available, or connection is broken.
- * @param {object} error describe error
- */
-export function booksLoadingError(error) {
-    return {
-        type: 'booksLoadingError',
-        status: 'booksLoading',
-        error: error
-    };
-}
-```
-### Create action creator
-
-Next important thing we need is populary called action creator. In Redux it would be something like Thunk action. Especiall action executing asychronly and dispatching 'real' actions. Usually this kind of actions are called from UI. So our action creator in this case will look like this:
-
-```javascript
-/**
- * 'Action creator' for loading list of books. This method is executing asynchorny and dispatch diffrent
- * actions during fetching books like: started, ok, notok.
- * @param {Function} dispatch function passed via Evax library to be used to dispatch actions
- */
-export function loadBooks(dispatch) {
-    dispatch(booksLoading());
-    getBooks().then((books) => {
-        dispatch(booksLoaded(books));
-    }).catch(error => {
-        dispatch(booksLoadingError(error));
-    });
-}
-```
-You can notice that action creator has parameter dispatch function, which is a bit different then in Redux Thunk action. If Action creator has several parameters, last one will always be dispatch function injected by Evax library.
-
-For example:
-
-```javascript
-export function userLogin (email, password, dispatch) {
-    login(email, password).then((user: User) => {
-        dispatch(userLoggedIn(user));
-    });
-};
-```
-So that's it. We didn't acctually use reducers, state from action is merged to store, and we are skipping so usuall ``` switch/case``` practice.
-
-### Using in UI
-Here is uncomplete example. We'll not handle page loading or errors, assuming that our API works fine and books will be fetched from server successfully.
-
+- Hello World examples
 ```javascript
 import React from 'react';
-// we import previoisly created store
-import { useBooks } from '../../store';
-// we import previoisly created action
-import { loadBooks } from '../actions';
-// this is just UI element for representing book in the list.
-import BookItem from './book';
+import { createStore } from 'mini-reducers';
 
-const BookList = () => {
-    // this is key line. here we send list of action i.e. useBooks(loadBooks, addToBasket, ..., )
-    // and we get back store itself and actions (functions) that are ready to be dispatched.
-    // notice that we don't have anywhere dispatch function. 
-    const [store, LoadBooks] = useBooks(loadBooks);
-    if (!store.status) {
-        // now we just call action. 
-        LoadBooks();
+// define store
+const messages = () => ({ message: undefined });
+// create store
+const [useMessages] = createStore(messages);
+// create action
+const getMesssage = (message) => ({
+    type: 'messageReceived',
+    message
+});
+// create ui element
+export const HelloWorld = () => {
+    const [store, GetMesssage] = useMessages(getMesssage);
+    if (!store.message) {
+        // call action directly, no wrapping etc.
+        GetMesssage('somebody');
     }
     return (
         <div>
-            <h1>Books</h1>
-            <div className='books-grid-container'>
-                {store.books.map((book) => (
-                    <BookItem key={book.id} book={book} bookAction={() => console.log('action') } actionCaption='Add to basket' />
-                ))}
-            </div>
+            {store.message}
         </div>
     );
 };
-
-export default BookList;
 ```
-NOTICE: FROM NOW ON I'm switching to function arrow style and use flow.js for static types.
-Hope it's OK, and that code will be still readable if even more understandable.
-## Add search
-
-To add search option we need to add
-1. Action 
-```javascript
-/**
- * Action to be called when user wants to search for books.
- * @param {string} filter use this value to query books
- */
-export const filteringBooks = (filter: string) => ({
-    type: 'filteringBooks',
-    status: 'filteringBooks',
-    filter
-});
-```
-2. Action creator
-```javascript
-/**
- * Action creator for filtering/searching books.
- * It is using loadBooks action creator for loading books.
- */
-export const filterBooks = (phrase: string, dispatch: Function) => {
-    dispatch(filteringBooks(phrase));
-    // we want to enable smooth filtering, without breaking while use typing key words.
-    // so until user stop typing or make pause, we don' want to have non-neccessary, interupting rendering
-    if (rejectFilterFetch) {
-        rejectFilterFetch();
-    }
-    const fetchBooks: Promise<Array<Book>> = new Promise((resolve, reject) => {
-        rejectFilterFetch = reject;
-        getBooks(phrase).then((books: Array<Book>) => {
-            resolve(books);
-        });
-    });
-    fetchBooks.then(books => {
-        dispatch(booksLoaded(books));
-    });
-};
-```
-3. Update UI
-First of all we want to start using filterBooks action (creator). 
-After we include it:
-```javascript
-import { loadBooks, filterBooks } from '../actions';
-```
-we can start using it after 'factoring' with useBooks hook. 
-```javascript
-const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
-```
-4. Finally we can add html element to call this action
-```html
-<input className='search-box' value={store.filter} onChange={(e) => FilterBooks(e.target.value)}></input>
-```
-
-All together it looks like this:
+- Hello World - async
 ```javascript
 import React from 'react';
-import { useBooks } from '../../store';
-import { loadBooks, filterBooks } from '../actions';
-import BookItem from './book';
-
-const BookList = () => {
-    const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
-    if (!store.status) {
-        LoadBooks();
-    }
-    return (
-        <div className='books-grid-container'>
-            <div className='books-list-caption'>
-                Books
-            </div>
-            <div className='book-list-search'>
-                <input className='search-box' value={store.filter} onChange={(e) => FilterBooks(e.target.value)}></input>
-            </div>
-            <div className='book-list'>
-                {store.books.map((book) => (
-                    <BookItem key={book.id} book={book} bookAction={() => console.log('action') } actionCaption='Add to basket' />
-                ))}
-            </div>
-        </div>
-    );
-};
-
-export default BookList;
-
-```
-## Adding another store.
-
-Obviously we'll need store to keep track on books that user wants to buy. Notice that in this moment user is still not logged in, we'll come to this latter. 
-
-So let's start in same order
-
-### Define store
-
-We already have store named books, we need new one named shoopingBag. Here how now our store file looks:
-```javascript
-// import @flow
 import { createStore } from 'micro-reducers';
-import { Book } from '../model';
 
-/**
- * Definition of book list store.
- */
-export interface BooksStore {
-    /**
-     * list of books loaded from server
-     */
-    books: Array<Book>,
-    /**
-     * Status of current book action. For example: loading, loaded, error.
-     */
-    status?: string,
-    /**
-     * When user is searching/filtering books here we store current filter
-     */
-    filter?: string
-}
+// define store
+const messages = () => ({ message: undefined });
 
-export type BooksHash = { [number: number]: Book };
+// create store
+const [useMessages] = createStore(messages);
 
-/**
- * Definition of shopping bag store.
- */
-export interface BasketStore {
-    /**
-     * Books that user wants to buy
-     */
-    books: Array<Book>,
-    /**
-     * Total amount for paying
-     */
-    total: number,
-    /**
-     * Helper dictionary structure for adjusting prices while search, etc.
-     */
-    booksHash: BooksHash
-}
-
-/**
- * This is how we define sore. Funcion with initial state.
- */
-const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
-/**
- * Crerting shoopingBag store
- */
-const shoopingBag = () => ({ books: [], total: 0, booksHash: {} }: BasketStore);
-
-/**
- * createStore is utility function to create store, and utility function (see returning result).
- * This utility function are latter used by UI to handle store and dispatch actions.
- */
-const [useBooks, useBasket] = createStore(books, shoopingBag);
-export { useBooks };
-export { useBasket };
-```
-
-### Create actions
-
-```javascript
-export const addToBasket = (book: Book) => ({
-    type: 'addBookToBasket',
-    book
+// create action
+const messageReceived = (message) => ({
+    type: 'messageReceived',
+    message
 });
 
-export const removeFromBasket = (book: Book) => ({
-    type: 'removeFromBasket',
-    book
-});
-```
-
-### We don't need action creators (for now)
-Add, and remove actions are not calling web API or anything like that. They just update store locally in memory. So we can just call them from UI as we did with LoadBooks
-
-### Implement 'Add to basket' option on book list page
-Now we need something like reducers. We need to update basket list of books, but also total price, and maybe some other things, so we cannot just merge state like in previous example
-
-### Adding reducers
-Here is whole code, hoepfully understandable, (more description coming)
-```javascript
-/**
- * This is replacer for reducers.
- * It is not mandatory to have "reducer". If doesn't exist, action result will just merge with current store.
- */
-export const basketReducers = () => {
-    /**
-     * User add book to shoping bag
-     * @param {ShopingBagStore} store store to keep data about shoping, use can add, remove, or pay choosen books.
-     * @returns {BasketStore} return updated data (store) for shoping bag.
-     */
-    const onAddBookToBasket = (store: BasketStore, actionResult: any): BasketStore => {
-        const basketBooks: Array<Book> = store.books ? store.books : [];
-        const booksHash: {} = store.booksHash ? store.booksHash : {};
-        booksHash[actionResult.book.id] = actionResult.book;
-        actionResult.book.inBasket = true;
-        basketBooks.push(actionResult.book);
-        return { ...store, books: basketBooks, booksHash };
-    };
-
-    // eslint-disable-next-line no-unused-vars
-    const onAddBookToBasketAdjustPrice = (store: BasketStore, actionResult: any): BasketStore => {
-        const basketBooks: Array<Book> = store.books ? store.books : [];
-        let total: number = 0;
-        basketBooks.forEach((book: Book) => {
-            total += book.price;
-        });
-        return { ...store, totalPrice: total };
-    };
-
-    useReducer('addBookToBasket', onAddBookToBasket);
-    useReducer('addBookToBasket', onAddBookToBasketAdjustPrice);
-
-    const onRemoveFromBasket = (store: BasketStore, actionResult: any) => {
-        actionResult.book.inBasket = false;
-        const basketBooks: Array<Book> = store.books ? store.books : [];
-        const booksHash: BooksHash = store.booksHash ? store.booksHash : {};
-        delete booksHash[actionResult.book.id];
-        for (let i = basketBooks.length - 1; i >= 0; i--) {
-            if (basketBooks[i].id === actionResult.book.id) {
-                basketBooks.splice(i, 1);
-                break;
-            }
-        }
-        return { ...store, books: basketBooks };
-    };
-
-    const onRemoveFromBasketAdjustPrice = (store: BasketStore, actionResult: any): BasketStore => {
-        const total: number = store.totalPrice - actionResult.book.price;
-        return { ...store, totalPrice: total };
-    };
-
-    useReducer('removeFromBasket', onRemoveFromBasket);
-    useReducer('removeFromBasket', onRemoveFromBasketAdjustPrice);
+// create action creator (async action)
+const messageRequest = (name, dispatch) => {
+    setTimeout(() => {
+        dispatch(messageReceived(`Hello world to ${name}`));
+    }, 1000);
 };
 
-export const reducers = () => {
-    basketReducers();
-};
-```
-You can notice that you can define several reducer function for one action. It gives you nice mechanizm to partially implement logic, and test it. Of course you must take care of order.
-
-### UI
-On our books page we can now start using new store and actions.
-The whole new UI looks now like this:
-```javascript
-const BookList = () => {
-    const [store, LoadBooks, FilterBooks] = useBooks(loadBooks, filterBooks);
-    // WE ADD THIS and in element with class book-list you can see how we are using it.
-    const [basket, AddToBasket, RemoveFromBasket] = useBasket(addToBasket, removeFromBasket);
-    if (!store.status) {
-        LoadBooks();
+// create ui element
+export const HelloWorld = () => {
+    const [store, MessageRequest] = useMessages(messageRequest);
+    if (!store.message) {
+        // call action directly, no wrapping etc.
+        MessageRequest('somebody');
     }
     return (
-        <div className='books-grid-container'>
-            <div className='books-list-caption'>
-                Books
-            </div>
-            <div className='book-list-search'>
-                <input className='search-box' value={store.filter} onChange={(e) => FilterBooks(e.target.value)}></input>
-            </div>
-            <div className='book-list-basket'>
-                <div className='basket-logo'>
-                    <img src={basketImg} height={50} />
-                </div>
-                <div className='book-list-basket-price'>
-                    price: {basket.totalPrice}
-                    <br/>
-                    items: ({basket.books.length})
-                </div>
-            </div>
-            <div className='book-list'>
-                {store.books.map((book) => (book.inBasket === true
-                    ? <BookItem key={book.id} book={book} bookAction={RemoveFromBasket} actionCaption='Remove from basket' />
-                    : <BookItem key={book.id} book={book} bookAction={AddToBasket} actionCaption='Add to basket' />
-                ))}
-            </div>
+        <div>
+            {store.message}
         </div>
     );
 };
-
-export default BookList;
 ```
 
-# Binding actions to UI
-This is the most exciting feature of Evax. You can declerative bind action parameters with UI. We'll start with simple example. Login use case. I'll show now just changes in code to avoid too many copy/past code.
-## Preparation
-1. In ./bookShop/mode/index.js we are adding:
-```javascript
-export interface User {
-    userName: string;
-    email: string;
-    age: number;
-}
-```
-2. In ./booksShop/store/index.js we have following changes:
-```javascript
-...
-import { Book, User } from '../model';
-...
-...
-/**
- * Holding data in user session
- * For example using this store we can find out if user is signed in or not.
- */
-export interface SessionStore {
-    user: User;
-}
-...
-...
-/**
- * Creating session store.
- */
-const session = () => ({ user: null }: SessionStore);
-...
-...
-/**
- * createStore is utility function to create store and new utility function (see returning result).
- * This utility function are latter used by UI to handle store and dispatch actions.
- * Also last two parameters are global store and useReducer utility function.
- */
-const [useBooks, useBasket, useSession, store, useReducer] = createStore(books, shoopingBag, session);
-...
-...
-export { useSession };
-```
-3. Add actions.
-```javascript
-import { User } from '../../model';
-import { signUp, signIn } from '../api';
+### Bind action to UI
 
-export const userSignedIn = (user: User) => ({
-    type: 'userSignedIn',
-    user
-});
-
-export const userSignedUp = (user: User) => ({
-    type: 'userSignedUp',
-    user
-});
-
-export const userSignIn = (email: string, password: string, dispatch: Function) => {
-    signIn(email, password).then((user: User) => {
-        dispatch(userSignedIn(user));
-    });
-};
-
-export const userSignUp = (email: string, password: string, age: number, source: string, gender:string, dispatch: Function) => {
-    signUp(email, password, age, source, gender).then((user: User) => {
-        dispatch(userSignedUp(user));
-    });
-};
-```
-
-Let's check now UI for login. 
+- Bind reducer actions to UI (sync)
 ```javascript
 import React from 'react';
-import { useSession } from '../../store';
-import { userSignIn } from '../actions';
-import history from '../../../common/history';
-import { bindActionProps } from 'micro-reducers';
-import './style.css';
+import { createStore, bindActionProps } from 'micro-reducers';
 
-const Login = () => {
-    const [store, UserSignIn] = useSession(userSignIn);
-    if (store.user) {
-        history.push('/');
-    }
+// define store
+const lottery = () => ({ userName: undefined, lotteryTicketNo: 0, messageForUser: '' });
+// create store
+const [useLottery] = createStore(lottery);
+// create action
+const lotteryResult = (won, amount, messageForUser) => {
+    console.log(`user result: ${won}, and amount: ${amount}`);
+    return {
+        type: 'lotteryResult',
+        won,
+        amount,
+        messageForUser
+    };
+};
+// create action creator
+const lotterySubmit = (userName, lotteryTicketNo, dispatch) => {
+    // imitate server call with timout function
+    console.log(`calling async method and send ${userName} and ${lotteryTicketNo} to some API`);
+    setTimeout(() => {
+        // so let's pretend that variables won and amount are result from API code.
+        const won = !(Math.floor(Math.random() * 2) > 0);
+        const getRndAmount = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+        let amount = 0;
+        if (won !== 0) {
+            amount = getRndAmount(1000, 300000);
+        }
+        const message = won ? `Bravo! You just won $ ${amount}!` : 'Sorry try next time';
+        // now call action (notice it's async)
+        dispatch(lotteryResult(won, amount, message));
+    }, 200);
+};
 
-    const login = bindActionProps(UserSignIn,
-        'user.email',
-        'user.password');
-
+// create ui element
+const HelloWorld = () => {
+    const [store, LotterySubmit] = useLottery(lotterySubmit);
+    // bind action arguments in the same order as action signature.
+    // in this case lotterSubmit has arguments (userName, lotteryTicketNo) see above.
+    // bindActionProps will create function ready to pick up values from ui and to invoke action, so it's easy to bind to UI.
+    const submit = bindActionProps(LotterySubmit,
+        'user.userName',
+        'user.lotteryNo');
     return (
         <>
-            <h1>Login</h1>
-            <div className='sigin-in-grid-container'>
-                <div className='sigin-in-user-name-label'>
-                    User name
-                </div>
-                <div className='sigin-in-user-name-text'>
-                    <input id='user.email' />
-                </div>
-                <div className='ssigin-in-user-pass-label'>
-                    Password
-                </div>
-                <div className='sigin-in-user-pass-text'>
-                    <input id='user.password' />
-                </div>
-                <div className='sigin-in-user-button'>
-                    <button onClick={login} >Login</button>
-                </div>
-                <div className='sigin-up-user-button'>
-                    <button onClick={() => history.push('/signup')} >Register</button>
-                </div>
+            <h3>Hello world example for action bindings (sync)</h3>
+            <div>
+                User name: <input type='text' id='user.userName' />
             </div>
+            <div>
+                Lottery No <input type='text' id='user.lotteryNo' />
+            </div>
+            <div>
+                <button onClick={submit}>Submit</button>
+            </div>
+            <p>
+                {store.messageForUser}
+            </p>
         </>
     );
 };
+export default HelloWorld;
+```
+- [Bind reducer actions to UI - async](https://github.com/jtomasevic/evax/wiki/4.-Action-Bindings-(async))
+- [Bind reducer actions to UI - more](https://github.com/jtomasevic/evax/wiki/5.-Action-bindings-value-manipulation-(input-text))
 
-export default Login;
-```
-Pay attention one this part:
+### Complex example with bindings (combo box, radio box group, converting to number):
 ```javascript
-    // remember that loging is now wrapper for UserSignIn function
-    const login = bindActionProps(UserSignIn,
-        'user.email', // take first parameter from element with id user.email
-        'user.password'); // take second parameter from element with id user.password 
-```
-and latter
-```javascript
-...
-    <input id='user.email' />
-...
-    <input id='user.password' />
-```
-and finally
-```javascript
-    <button onClick={login} >Login</button>
-```
-# More about binding action
-Here we'll introduce much more complex example from previous.
-- We'll need to convert value from default string to number
-- We'll use select tag to choose some value, and still to be able to connect it with action parameters
-- We'll use radio-button list with same challanges. 
-So I suggest let's frist take a look to whole code and then we'll go step by step and explain.
-
-```javascript
+/* eslint-disable radix */
 import React from 'react';
-import { useSession } from '../../store/index';
+import { bindActionProps } from 'micro-reducers';
+import { useSession } from '../../store';
 import { userSignUp } from '../actions';
 import history from '../../../common/history';
-import { bindActionProps } from 'micro-reducers;
+
 
 // this will be our hellper structure for 'how did tou find us' which is usually get from API, but let's keep things simple for now.
 const howDidYouFinUsOptions = [
@@ -794,19 +345,98 @@ const SignUp = () => {
 
 export default SignUp;
 ```
+### Make your arrays auto add/remove without reducers (new from 1.5)
+Use utility methods
+- forArrPush
+- forArrRemove
 
-## Installation
+to bind actions to add/remove operation under arrays, to avoid adding reducers.
 
-This is more/less usual set of packages to start react application with babel, ES5 sintax, and support for flow.js. Also you'll notice there are some eslint rules too. No need to go deep into package.json (or other) files for now so just hit in terminal:
+>Here is sandbox:
+[Very simple Todo app without reducers](https://codesandbox.io/s/zen-resonance-tjqjx)
 
+and portion of code
 ```javascript
-npm install
+import React from 'react';
+import { bindActionProps, forArrPush, forArrRemove } from 'micro-reducers';
+import { useTodoList } from './store';
+import { addTask, completeTask } from './actions';
+
+const Task = ({ task, onComplete }) => (
+    <li>
+        {task.name}
+        <br/>
+        <button onClick={(e) => { e.stopPropagation(); onComplete(task); }}> Complete </button>
+    </li>
+);
+const TodoList = () => {
+    // here we bind input action params to function which create object for array 
+    const addParamsToObj = (taskName) => ({ name: taskName });
+    // here we bind input params to function which return object to be removed from array
+    const removeParamsToObj = (task) => (task);
+    const [store, AddTask, CompleteTask] = useTodoList(
+        // now we wrap our actions
+        // as first parameter we need to say which colllection we are maintaining.
+        // second parameter is action, and last params to object functions
+        forArrPush('tasks', addTask, addParamsToObj),
+        forArrRemove('tasks', completeTask, removeParamsToObj)
+    );
+    const tasks = store.tasks.map((task) => <Task key={task._key} task={task} onComplete={CompleteTask} />);
+    const add = bindActionProps(AddTask, 'task.name');
+    const onAdd = (e) => {
+        e.stopPropagation();
+        add();
+        document.getElementById('task.name').value = '';
+    };
+    return (
+        <>
+            <div>
+                    Task list
+                <ul>
+                    {tasks}
+                </ul>
+            </div>
+            <div>
+                <input type='text' id='task.name' />
+            </div>
+            <div>
+                <button onClick={onAdd}>Add</button>
+            </div>
+        </>
+    );
+};
 ```
 
-## Run
+## Finally Reducers.
 
-Just hit 
+When we need reducer we write function for specific action.
+
+Also we can split code in several functions (reducers), and include/exclude features as we test/want/etc...
+
+I need to write more about this but here is one example to ilustrate. We have online book store, and we can add and remove from our shoping bag. 
+> Let's say we are not using feature explained in chapter above
+> Make your arrays auto add/remove without reducers (new from 1.5) 
+
+As we have array of books and total price in state, we need reducers. Apologies for not very well explained example, but I'll work more on this in following days.
+
 ```javascript
-npm run start
+    const onRemoveFromBasket = (store, actionResult) => {
+        const basketBooks: Array<Book> = store.books ? store.books : [];
+        for (let i = basketBooks.length - 1; i >= 0; i--) {
+            if (basketBooks[i].id === actionResult.book.id) {
+                basketBooks.splice(i, 1);
+                break;
+            }
+        }
+        return { ...store, books: basketBooks };
+    };
+
+    const onRemoveFromBasketAdjustPrice = (store, actionResult) => {
+        const total: number = store.totalPrice - actionResult.book.price;
+        return { ...store, totalPrice: total };
+    };
+
+    // use two reducer function for this action
+    useReducer('removeFromBasket', onRemoveFromBasket);
+    useReducer('removeFromBasket', onRemoveFromBasketAdjustPrice);
 ```
-and go to:  ```http://localhost:7000/```
