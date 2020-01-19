@@ -1,0 +1,49 @@
+.todo-grid {
+	display: grid;
+	grid-template-areas:
+	  'tname tadd ';
+	grid-gap: 1px;
+	/* background-color: silver; */
+	padding: 1px;
+	grid-template-columns: 200px 90px;
+}
+.tasks-grid {
+	display: grid;
+	grid-gap: 1px;
+	padding: 1px;
+	grid-template-areas:
+	'tname tompl tremv';
+	grid-template-columns: 200px 90px 80px;
+}
+
+.task-name { grid-area: 'tname';}
+.task-complete { grid-area: 'tompl';}
+.task-remove { grid-area: 'tremv';}
+.tasks { grid-area: 'tasks';}
+
+.todo-button {
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	background-color:#44c767;
+	border-radius:3px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: sans-serif;
+	font-size:14px;
+	padding:5px 10px;   
+	text-decoration:none;
+}
+.todo-button:hover {
+	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+	background-color:#5cbf2a;
+}
+
+input {
+    font-size:14px; 
+    border-width:2px; 
+    border-color:#cccccc; 
+    border-style:solid; 
+    padding:4px; 
+    border-radius:4px; 
+}
