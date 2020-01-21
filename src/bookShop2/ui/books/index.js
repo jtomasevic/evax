@@ -14,7 +14,7 @@ class BookList extends React.Component {
         this.state = {
             basket: {
                 books: [],
-                total: 0
+                totalPrice: 0
             },
             books: {
                 filter: '',
@@ -50,9 +50,9 @@ class BookList extends React.Component {
                         <img src={basketImg} height={50} />
                     </div>
                     <div className='book-list-basket-price'>
-                    price: {this.state.shoopingBag.totalPrice}
+                    price: {this.state.basket.totalPrice}
                         <br/>
-                        items: ({this.state.shoopingBag.books.length})
+                        items: ({this.state.basket.books.length})
                     </div>
                 </div>
                 <div className='book-list'>

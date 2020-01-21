@@ -53,7 +53,7 @@ export interface SessionStore {
  */
 const books = () => ({ books: [], status: undefined, filter: undefined }: BooksStore);
 /**
- * Creating shoopingBag store
+ * Creating basket store
  */
 const basket = () => ({ books: [], totalPrice: 0, booksHash: {} }: BasketStore);
 /**
