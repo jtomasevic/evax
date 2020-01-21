@@ -3,10 +3,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import './style.css';
-import { bindActionProps, forArrPush, forArrRemove, forUpdateArray, forFilterArray, forArrPushAsync } from 'micro-reducers';
+import { bindActionProps, forArrPushAsync, forArrRemoveAsync, forUpdateArrayAsync, forFilterArrayAsync } from 'micro-reducers';
 import { useTodoList } from './store';
-import { addTask, completeTask, deleteTask, filterTasks, taskStatus, cancelFilter } from './actions';
-import { addTaskAsync } from '../todoAutoArrayModeWithUpdateAsync/actions';
+import { addTaskAsync, completeTaskAsync, deleteTaskAsync, filterTasksAsync, taskStatus, cancelFilter } from './actions';
 
 const Task = ({ task, onComplete, onDelete }) => (
     <>
@@ -32,15 +31,15 @@ const TodoList = () => {
         // This means: let my completeTask become 'update array member' operation under
         // task array. Last attribute is function that is returning new object state
         // Remember, each object has key, so that's how library will find original and update.
-        forUpdateArray('tasks', completeTask, (task) => ({ ...task, status: 'completed' })),
+        forUpdateArrayAsync('tasks', completeTaskAsync, (task) => ({ ...task, status: 'completed' })),
         // This means: let my deleteTask action become delete operation under 'tasks' array
         // Last attribute is function that is returning object that should be deleted
-        forArrRemove('tasks', deleteTask, (task) => (task)),
+        forArrRemoveAsync('tasks', deleteTaskAsync, (task) => (task)),
         // This means: I want to use filtering under tasks array with filterTasks action
         // Last attribute is function with two parameters:
         //  1. original array
         //  2. attributes from dispatched action.
-        forFilterArray('tasks', filterTasks, (arr, params) => (arr.filter(t => t.status === params.status))),
+        forFilterArrayAsync('tasks', filterTasksAsync, (arr, params) => (arr.filter(t => t.status === params.status))),
         // This just simply means I want to wrap cancelFilter function to be used in UI.
         // Nothing especiall, BUT this action returns
         // { type: '!cancelFilter', collectionName: 'tasks' } which by convention means reset filer on array tasks
@@ -78,6 +77,7 @@ const TodoList = () => {
         if (e.target.value === 'cancelStatusFilter') {
             CancelFilter('tasks');
         } else {
+            console.log('------------');
             filter();
         }
     };
@@ -90,7 +90,7 @@ const TodoList = () => {
     console.log('RENDER store.tasks', store);
     return (
         <>
-            <h1>Task list</h1>
+            <h1>Task List</h1>
             <div className='todo-grid'>
                 <div className='tname'>
                     <input type='text' id='task.name' />

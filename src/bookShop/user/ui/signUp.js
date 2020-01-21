@@ -6,7 +6,8 @@ import { userSignUp } from '../actions';
 import history from '../../../common/history';
 
 
-// this will be our hellper structure for 'how did tou find us' which is usually get from API, but let's keep things simple for now.
+// this will be our hellper structure for 'how did tou find us' which is usually get from API
+// but let's keep things simple for now.
 const howDidYouFinUsOptions = [
     'Recomendation',
     'Googling about bookd',
@@ -28,7 +29,8 @@ const SignUp = () => {
     /**
      * Binding works in this way.
      * 1. First parameter is Action.
-     * 2. Then by action signature order, goes id's of controls that in some way keep value for action parameter.
+     * 2. Then by action signature order, goes id's of controls that in some way keep value
+     *    for action parameter.
      * In given example UserSignup is wrapper for action that has following signature:
      *  userSignUp = (email: string,
      *                password: string,
@@ -47,8 +49,9 @@ const SignUp = () => {
         'user.source',
         'user.gender');
     // generating select option.
-    const options = howDidYouFinUsOptions.map((op: string) => <option key={op} value={op}>{op}</option>);
-    // we need a trick for radio-button. trick is that one element can connect id and value attribute to enable bindings.
+    const options = howDidYouFinUsOptions.map((o: string) => <option key={o} value={o}>{o}</option>);
+    // we need a trick for radio-button. trick is that one element can connect id and value
+    // attribute to enable bindings.
     // try to figure out next few lines (more explanation coming).
     const onGenderChange = (e) => (document.getElementById('user.gender').setAttribute('value', e.target.value));
     const genderOptions = genders.map((gender: string) => <span key={gender}>
