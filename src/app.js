@@ -6,7 +6,7 @@ export const App = () => (
         <ul>
             <h3>Book shop examples</h3>
             <li> <a href="/books">Book shop</a> </li>
-            <li> <a href="/books2">Book shop (implementation with class component</a> </li>
+            <li> <a href="/books2">Book shop (implementation with class component - not still full finished</a> </li>
             <li> <a href="/signin">Sign in</a> </li>
             <li> <a href="/signup">Sign up</a> </li>
         </ul>
@@ -20,10 +20,10 @@ export const App = () => (
         <ul>
             <h3>Todo examples</h3>
             <li>
-                <a href="/todo">Very simplle todo (using reducers)</a>
+                <a href="/todo">Very simple todo (using reducers)</a>
             </li>
             <li>
-                <a href="/todo2">Very simplle todo (no reducers)</a>
+                <a href="/todo2">Very simple todo (no reducers)</a>
             </li>
             <li>
                 <a href="/todo3">Todo with filtering</a>
