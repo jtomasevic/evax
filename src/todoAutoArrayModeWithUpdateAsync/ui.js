@@ -3,9 +3,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import './style.css';
-import { bindActionProps, forArrPushAsync, forArrRemoveAsync, forUpdateArrayAsync, forFilterArrayAsync } from 'micro-reducers';
+import { useNotification, bindActionProps, forArrPushAsync, forArrRemoveAsync, forUpdateArrayAsync, forFilterArrayAsync } from 'micro-reducers';
 import { useTodoList } from './store';
-import { addTaskAsync, completeTaskAsync, deleteTaskAsync, filterTasksAsync, taskStatus, cancelFilter } from './actions';
+import { addTaskAsync, completeTaskAsync, deleteTaskAsync, filterTasksAsync, taskStatus, cancelFilter, taskPushed } from './actions';
+import { taskPushedFromServer } from './api';
+
+
+taskPushedFromServer();
 
 const Task = ({ task, onComplete, onDelete }) => (
     <>
@@ -45,6 +49,8 @@ const TodoList = () => {
         // { type: '!cancelFilter', collectionName: 'tasks' } which by convention means reset filer on array tasks
         cancelFilter
     );
+    // const [notifications] = useNotification(taskPushed);
+
     // Here we said: first parameter of AddTask (originally addTask) action
     // Will be picked up from ui element with id 'task.name'.
     // In this case this is input text field.
@@ -87,7 +93,11 @@ const TodoList = () => {
     // That's why we have this here. While filtering is on we'll bind filtered list, otherwise original one.
     let tasks = store.tasksWithFilter ? store.tasksWithFilter : store.tasks;
     tasks = tasks.map((task) => <Task key={task._key} task={task} onComplete={CompleteTask} onDelete={DeleteTask} />);
-    console.log('RENDER store.tasks', store);
+    console.log('RENDER store.tasks2', store);
+    useNotification((message) => {
+        console.log('++notificatioCallBack', message);
+        AddTask(message.name);
+    });
     return (
         <>
             <h1>Task List</h1>

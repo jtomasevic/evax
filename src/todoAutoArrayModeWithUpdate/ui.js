@@ -79,6 +79,7 @@ const TodoList = () => {
             CancelFilter('tasks');
         } else {
             filter();
+            console.log('---------sadf---');
         }
     };
     // Generating select options for task status filter
@@ -87,7 +88,7 @@ const TodoList = () => {
     // That's why we have this here. While filtering is on we'll bind filtered list, otherwise original one.
     let tasks = store.tasksWithFilter ? store.tasksWithFilter : store.tasks;
     tasks = tasks.map((task) => <Task key={task._key} task={task} onComplete={CompleteTask} onDelete={DeleteTask} />);
-    console.log('RENDER store.tasks', store);
+    console.log('RENDER store.tasks2', store);
     return (
         <>
             <h1>Task list</h1>

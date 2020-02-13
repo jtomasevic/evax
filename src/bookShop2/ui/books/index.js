@@ -10,7 +10,8 @@ class BookList extends React.Component {
     constructor(state, context) {
         super(state, context);
         // Very important:
-        // you need to define proper state, with proper properties.
+        // you need to define proper state, with proper properties
+        // they need to match portion of store you are serving here.
         this.state = {
             basket: {
                 books: [],

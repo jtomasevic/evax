@@ -38,3 +38,5 @@ export const taskStatus = [
     'active',
     'completed'
 ];
+
+export const taskPushed = (task) => ({ type: 'taskPushed', task });
