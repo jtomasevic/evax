@@ -12,11 +12,13 @@ import { todoList } from './todo';
 import { todoList2 } from './todoAutoArrayMode';
 import { todoList3 } from './todoAutoArrayModeWithUpdate';
 import { todoList4 } from './todoAutoArrayModeWithUpdateAsync';
+import { App } from './app';
 
 reducers();
 render(
     <Router history={history}>
-        <Route exact path="/" component={BookList} />
+        <Route exact path="/" component={App} />
+        <Route exact path="/books" component={BookList} />
         <Route exact path="/basket" component={Basket} />
         <Route exact path="/books2" component={BookListClassStyle} />
         <Route exact path="/signin" component={SignIn} />

@@ -41,7 +41,7 @@ class BookList extends React.Component {
         return (
             <div className='books-grid-container'>
                 <div className='books-list-caption'>
-                Books
+                Books C
                 </div>
                 <div className='book-list-search'>
                     <input className='search-box' onChange={(e) => this.FilterBooks(e.target.value)}></input>

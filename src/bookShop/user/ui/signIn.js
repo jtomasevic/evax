@@ -8,7 +8,7 @@ import history from '../../../common/history';
 const Login = () => {
     const [store, UserSignIn] = useSession(userSignIn);
     if (store.user) {
-        history.push('/');
+        history.push('/books');
     }
 
     const login = bindActionProps(UserSignIn,
