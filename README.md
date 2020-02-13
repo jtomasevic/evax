@@ -4,7 +4,6 @@
 > go to http://localhost:7000/
 
 ## About:
-Please aplogies, still not have enough time to give all explanation but you can analyze page ```src\index.js``` see paths, and play with examples. Some of them are on codesandbox/
 
 > - Library inspired by Redux (inherit from Flux) philosophy.
 > - Trying to **automate state management** whenever it's possible.
